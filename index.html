@@ -184,6 +184,18 @@ header{
 .fat-bar-fill{height:100%;border-radius:2px;transition:width 0.4s}
 .fat-val{font-family:var(--font-mono);font-size:0.56rem;width:28px;text-align:right}
 
+/* ready panel */
+.ready-row{padding:7px 0;border-bottom:1px solid var(--border)}
+.ready-row:last-child{border-bottom:none}
+.ready-muscle-name{font-family:var(--font-mono);font-size:0.65rem;color:var(--text);margin-bottom:4px}
+.ready-dims{display:flex;flex-direction:column;gap:2px}
+.ready-dim-row{display:flex;align-items:center;gap:6px}
+.ready-dim-lbl{font-family:var(--font-mono);font-size:0.52rem;font-weight:600;width:10px;flex-shrink:0}
+.ready-status{font-family:var(--font-mono);font-size:0.55rem;flex:1}
+.ready-ok{color:#44cc66}
+.ready-wait{color:#ff6600}
+.ready-never{color:var(--muted2)}
+
 /* history list */
 .hist-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
 .hist-row:last-child{border-bottom:none}
@@ -213,6 +225,7 @@ header{
         <button class="tg-btn active" data-viz="volume">VOLUME</button>
         <button class="tg-btn" data-viz="stimolo">STIMOLO</button>
         <button class="tg-btn" data-viz="fatigue">FATIGUE</button>
+        <button class="tg-btn" data-viz="ready">READY</button>
       </div>
     </div>
     <div class="body-wrap"><div id="body-map"></div></div>
@@ -468,41 +481,41 @@ function renderRightPanel() {
     const fat    = getFatigueTotals(fatRaw);
 
     if (vizMode==='volume') {
-      const top = Object.entries(prog)
+      const allVol = Object.entries(prog)
         .map(([m,d])=>({m,total:Object.values(d).reduce((a,b)=>a+b,0)}))
-        .sort((a,b)=>b.total-a.total).slice(0,10);
-      const maxT = top.length?top[0].total:1;
+        .sort((a,b)=>b.total-a.total);
+      const maxT = allVol.length?allVol[0].total:1;
       p.innerHTML = `
         <div class="panel-label">Volume <em>cumulativo</em></div>
         <div class="kpi-grid">
           <div class="kpi"><div class="kpi-val">${HISTORY.length}</div><div class="kpi-lbl">Sessioni</div></div>
-          <div class="kpi"><div class="kpi-val">${Object.keys(prog).length}</div><div class="kpi-lbl">Muscoli</div></div>
+          <div class="kpi"><div class="kpi-val">${allVol.length}</div><div class="kpi-lbl">Muscoli</div></div>
         </div>
-        <div class="section">
-          <div class="sec-title">Top muscoli allenati</div>
-          ${top.map(({m,total})=>{
-            const pct=Math.round((total/maxT)*100);
-            const tierIdx=Math.min(7,Math.floor(pct/12.5));
-            const col=VOL_TIER_COLORS[tierIdx];
+        <div class="scrollable"><div class="section">
+          <div class="sec-title">Tutti i muscoli</div>
+          ${allVol.map(({m,total})=>{
+            const ratio=total/maxT;
+            const pct=Math.round(ratio*100);
+            const logPct=Math.round((Math.log1p(ratio*9)/Math.log1p(9))*100);
+            const col=VOL_TIER_COLORS[Math.min(7,Math.floor(logPct/12.5))];
             const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
             return `<div class="mrow">
               <div class="mnm">${nm}</div>
-              <div class="mbar-bg"><div class="mbar-fill" style="width:${pct}%;background:${col}"></div></div>
+              <div class="mbar-bg"><div class="mbar-fill" style="width:${logPct}%;background:${col}"></div></div>
               <div class="mval" style="color:${col}">${Math.round(total)}</div>
             </div>`;
           }).join('')}
-        </div>`;
+        </div></div>`;
 
     } else if (vizMode==='stimolo') {
-      const top = Object.entries(prog)
+      const allStim = Object.entries(prog)
         .map(([m,d])=>({m,total:Object.values(d).reduce((a,b)=>a+b,0),dims:d}))
-        .sort((a,b)=>b.total-a.total).slice(0,7);
+        .sort((a,b)=>b.total-a.total);
       p.innerHTML = `
         <div class="panel-label">Stimolo <em>dominante</em></div>
-        <div class="scrollable">
-        <div class="section">
-          <div class="sec-title">Breakdown per muscolo</div>
-          ${top.map(({m,dims})=>{
+        <div class="scrollable"><div class="section">
+          <div class="sec-title">Tutti i muscoli</div>
+          ${allStim.map(({m,dims})=>{
             const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
             const domDim=Object.entries(dims).sort((a,b)=>b[1]-a[1])[0][0];
             const domCol=DIM_COLORS[domDim];
@@ -528,31 +541,81 @@ function renderRightPanel() {
           }).join('')}
         </div></div>`;
 
-    } else {
-      // fatigue
-      const top = Object.entries(fat).sort((a,b)=>b[1]-a[1]).slice(0,10);
-      const maxF = top.length?top[0][1]:1;
+    } else if (vizMode==='fatigue') {
+      const allMuscles = getAllMuscleIds();
+      const maxF = Math.max(...Object.values(fat), 1);
+      const sorted = allMuscles.map(m=>[m, fat[m]||0]).sort((a,b)=>b[1]-a[1]);
       p.innerHTML = `
-        <div class="panel-label">Fatigue <em>stima</em></div>
-        <div class="kpi-grid">
-          <div class="kpi"><div class="kpi-val">${top.filter(([,v])=>v/maxF>0.6).length}</div><div class="kpi-lbl">Affaticati</div></div>
-          <div class="kpi"><div class="kpi-val">${top.filter(([,v])=>v/maxF<0.3).length}</div><div class="kpi-lbl">Freschi</div></div>
+        <div class="panel-label">Fatigue <em>completa</em></div>
+        <div class="scrollable"><div class="section">
+          <div class="sec-title">Tutti i muscoli</div>
+          ${sorted.map(([m,v])=>{
+            const pct=Math.round((v/maxF)*100);
+            const col=pct>70?'#ff2200':pct>50?'#ff6600':pct>30?'#cc8800':'#44cc66';
+            const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+            const label=pct===0?'recuperato':pct+'%';
+            return `<div class="fat-row">
+              <div class="fat-nm">${nm}</div>
+              <div class="fat-bar-bg"><div class="fat-bar-fill" style="width:${pct}%;background:${pct>0?col:'transparent'}"></div></div>
+              <div class="fat-val" style="color:${col};min-width:72px;text-align:right">${label}</div>
+            </div>`;
+          }).join('')}
+        </div></div>`;
+
+    } else {
+      // READY panel — same threshold as fatigue (30%)
+      const fatRaw2 = computeFatigue();
+      const fatTot2 = getFatigueTotals(fatRaw2);
+      const allMuscles = getAllMuscleIds();
+      const maxF2 = Math.max(...Object.values(fatTot2), 1);
+
+      // Split into ready (<=30%) and not ready (>30%)
+      const readyList  = [];
+      const waitList   = [];
+      allMuscles.forEach(m=>{
+        const v = fatTot2[m]||0;
+        const pct = Math.round((v/maxF2)*100);
+        const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        if(pct<=30) readyList.push({m,nm,pct});
+        else waitList.push({m,nm,pct});
+      });
+      waitList.sort((a,b)=>b.pct-a.pct);
+
+      p.innerHTML = `
+        <div class="panel-label">Ready <em>oggi</em></div>
+        <div class="scrollable"><div class="section">
+          <div class="sec-title">✓ Pronti (${readyList.length})</div>
+          ${readyList.length===0?'<div style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted2);padding:4px">nessuno</div>':
+            readyList.map(({nm,pct})=>`
+              <div class="fat-row">
+                <div class="fat-nm" style="color:#44cc66">${nm}</div>
+                <div class="fat-bar-bg"></div>
+                <div class="fat-val" style="color:#44cc66;min-width:72px;text-align:right">pronto</div>
+              </div>`).join('')}
         </div>
         <div class="section">
-          <div class="sec-title">Livello fatica</div>
-          ${top.map(([m,v])=>{
-            const pct=Math.round((v/maxF)*100);
-            const col=pct>70?'#ff2200':pct>50?'#ff6600':pct>30?'#cc8800':'#2a6a2a';
-            const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+          <div class="sec-title">✗ In recupero (${waitList.length})</div>
+          ${waitList.map(({nm,pct})=>{
+            const col=pct>70?'#ff2200':pct>50?'#ff6600':'#cc8800';
             return `<div class="fat-row">
               <div class="fat-nm">${nm}</div>
               <div class="fat-bar-bg"><div class="fat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
-              <div class="fat-val" style="color:${col}">${pct}%</div>
+              <div class="fat-val" style="color:${col};min-width:36px;text-align:right">${pct}%</div>
             </div>`;
           }).join('')}
-        </div>`;
+        </div></div>`;
     }
   }
+}
+
+// ── ALL MUSCLE IDS ───────────────────────────────────────────────────
+let _allMuscleIds = null;
+function getAllMuscleIds() {
+  if (_allMuscleIds) return _allMuscleIds;
+  const ids = new Set();
+  EXERCISES.forEach(ex => Object.keys(ex.muscoli_svg).forEach(m => ids.add(m)));
+  _allMuscleIds = [...ids].sort();
+  return _allMuscleIds;
 }
 
 // ── COMPUTE PRESENT ───────────────────────────────────────────────────
@@ -668,6 +731,23 @@ function updateBodyMap() {
       const ratio = v / maxT;
       const n = Math.min(10, Math.round((Math.log1p(ratio * 9) / Math.log1p(9)) * 10));
       if(n >= 1) bodyState[m] = {intensity: n, selected: false};
+    });
+    chart.update({bodyState});
+
+  } else if (vizMode==='ready') {
+    clearCustomColors();
+    // Same threshold as fatigue panel: <=30% of max = ready
+    const fatRaw3 = computeFatigue();
+    const fatTot3 = getFatigueTotals(fatRaw3);
+    const maxF3 = Math.max(...Object.values(fatTot3), 1);
+    const bodyState = {};
+    getAllMuscleIds().forEach(m=>{
+      const v = fatTot3[m]||0;
+      const pct = (v/maxF3)*100;
+      // Only color muscles that have been trained (appear in fatigue map)
+      if(fatTot3[m]!==undefined && pct<=30) {
+        bodyState[m] = {intensity:7, selected:false};
+      }
     });
     chart.update({bodyState});
 

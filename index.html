@@ -201,6 +201,144 @@ header{
 .hist-row:last-child{border-bottom:none}
 .hist-name{font-family:var(--font-mono);font-size:0.62rem;color:var(--text)}
 .hist-date{font-family:var(--font-mono);font-size:0.56rem;color:var(--muted)}
+
+/* ── MOBILE ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow: hidden; }
+
+  header {
+    padding: 0 16px;
+    height: 48px;
+  }
+  .logo { font-size: 1.1rem; letter-spacing: 2px; }
+  .hdr-info { display: none; }
+  .mode-btn { padding: 4px 10px; font-size: 0.58rem; }
+
+  /* Hide desktop 3-col layout */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 48px);
+    overflow: hidden;
+  }
+  .panel, .panel-right { display: none !important; }
+
+  /* Center becomes full screen */
+  .center {
+    flex: 1;
+    padding: 10px 10px 0;
+    gap: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .row-btns { gap: 4px; }
+  .tg-btn { padding: 5px 10px; font-size: 0.55rem; letter-spacing: 1px; }
+
+  .body-wrap {
+    max-width: 100%;
+    flex: 1;
+    min-height: 0;
+    border-radius: 10px;
+    padding: 8px;
+  }
+
+  .hover-label { font-size: 0.55rem; min-height: 14px; }
+  .legend-wrap { font-size: 0.5rem; }
+
+  /* Bottom sheet */
+  .mobile-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    transform: translateY(calc(100% - 52px));
+    max-height: 80vh;
+  }
+  .mobile-sheet.open { transform: translateY(0); }
+
+  .sheet-handle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    margin: 0 auto;
+  }
+  .sheet-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 12px;
+  }
+  .sheet-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .sheet-content::-webkit-scrollbar { display: none; }
+
+  /* Mobile bottom nav */
+  .mobile-nav {
+    display: flex;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    position: fixed;
+    bottom: 52px; /* above sheet handle */
+    left: 0; right: 0;
+    z-index: 99;
+  }
+  .mobile-nav-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .mobile-nav-btn.active { color: var(--accent); }
+  .mobile-nav-btn svg { width: 16px; height: 16px; }
+
+  /* Add btn mobile */
+  .add-btn { font-size: 0.85rem; padding: 8px; }
+  .reset-btn { font-size: 0.6rem; padding: 6px; }
+
+  /* KPI smaller on mobile */
+  .kpi-val { font-size: 1.3rem; }
+  .kpi { padding: 8px 10px; }
+}
+
+/* Desktop: hide mobile elements */
+@media (min-width: 769px) {
+  .mobile-sheet { display: none !important; }
+  .mobile-nav   { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -236,6 +374,27 @@ header{
   </div>
   <div class="panel-right" id="right-panel"></div>
 </div>
+
+<!-- MOBILE: bottom sheet -->
+<div class="mobile-sheet" id="mobile-sheet">
+  <div class="sheet-handle-row" id="sheet-handle-row">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title" id="sheet-title">—</div>
+  </div>
+  <div class="sheet-content" id="sheet-content"></div>
+</div>
+
+<!-- MOBILE: bottom nav -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-btn active" id="mnav-list" data-panel="list">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    Lista
+  </button>
+  <button class="mobile-nav-btn" id="mnav-stats" data-panel="stats">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Stats
+  </button>
+</nav>
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────
@@ -323,6 +482,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   renderAll();
+  initMobile();
 });
 
 // ── RENDER ALL ────────────────────────────────────────────────────────
@@ -338,6 +498,7 @@ function renderAll() {
   document.getElementById('hdr-info').textContent = mode==='present'
     ? `${session.length} esercizi`
     : `${HISTORY.length} sessioni`;
+  if (isMobile()) renderMobileSheet();
 }
 
 // ── LEGEND ────────────────────────────────────────────────────────────
@@ -818,6 +979,102 @@ function overrideColors() {
 function clearCustomColors() {
   _customColors = null;
 }
+
+// ── MOBILE ────────────────────────────────────────────────────────────
+const isMobile = () => window.innerWidth <= 768;
+let sheetOpen = false;
+let mobilePanel = 'list'; // list | stats
+
+function initMobile() {
+  if (!isMobile()) return;
+
+  // Sheet toggle on handle tap
+  document.getElementById('sheet-handle-row').addEventListener('click', () => {
+    sheetOpen = !sheetOpen;
+    document.getElementById('mobile-sheet').classList.toggle('open', sheetOpen);
+  });
+
+  // Bottom nav
+  document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      mobilePanel = btn.dataset.panel;
+      document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Auto-open sheet when switching to stats
+      if (mobilePanel === 'stats') {
+        sheetOpen = true;
+        document.getElementById('mobile-sheet').classList.add('open');
+      }
+      renderMobileSheet();
+    });
+  });
+
+  renderMobileSheet();
+}
+
+function renderMobileSheet() {
+  if (!isMobile()) return;
+  const content = document.getElementById('sheet-content');
+  const title   = document.getElementById('sheet-title');
+
+  if (mobilePanel === 'list') {
+    title.textContent = mode === 'present' ? 'Esercizi' : 'Storico';
+    // Reuse left panel content
+    const left = document.getElementById('left-panel');
+    content.innerHTML = left.innerHTML;
+    // Re-attach exercise click handlers
+    if (mode === 'present') {
+      content.querySelectorAll('.ex-item:not(.in-session)').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.dataset.id;
+          const idx = pending.indexOf(id);
+          if (idx >= 0) pending.splice(idx, 1); else pending.push(id);
+          renderExList();
+          renderMobileSheet();
+          const btn = content.querySelector('#add-btn');
+          if (btn) { btn.disabled = pending.length===0; btn.textContent = pending.length>0?`AGGIUNGI (${pending.length})`:'AGGIUNGI'; }
+        });
+      });
+      const addBtn = content.querySelector('#add-btn');
+      if (addBtn) addBtn.addEventListener('click', () => { addToSession(); renderMobileSheet(); });
+      const resetBtn = content.querySelector('#reset-btn');
+      if (resetBtn) resetBtn.addEventListener('click', () => { session=[]; pending=[]; renderAll(); renderMobileSheet(); });
+    }
+  } else {
+    // Stats panel
+    title.textContent = mode === 'present' ? 'Sessione' : vizMode.toUpperCase();
+    const right = document.getElementById('right-panel');
+    content.innerHTML = right.innerHTML;
+    // Re-attach chip remove handlers
+    content.querySelectorAll('.chip-x').forEach(el => {
+      el.addEventListener('click', () => {
+        session = session.filter(s => s !== el.dataset.id);
+        renderAll();
+        renderMobileSheet();
+      });
+    });
+  }
+}
+
+// Hook into renderAll to also update mobile
+const _origRenderAll = renderAll;
+window.addEventListener('DOMContentLoaded', () => {
+  // After chart init, patch renderAll
+  const origRA = renderAll;
+  // Mobile sheet also updates after renderAll
+});
+
+// Override renderRightPanel to sync mobile
+const _origRenderRight = renderRightPanel;
+function renderRightPanelAndMobile() {
+  _origRenderRight();
+  if (isMobile()) renderMobileSheet();
+}
+
+// Handle resize
+window.addEventListener('resize', () => {
+  if (isMobile()) initMobile();
+});
 </script>
 </body>
 </html>

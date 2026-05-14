@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Scheda Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script>"use strict";var BodyMuscles=(()=>{var g=Object.defineProperty;var R=Object.getOwnPropertyDescriptor;var A=Object.getOwnPropertyNames;var z=Object.prototype.hasOwnProperty;var S=(i,t)=>{for(var e in t)g(i,e,{get:t[e],enumerable:!0})},E=(i,t,e,s)=>{if(t&&typeof t=="object"||typeof t=="function")for(let a of A(t))!z.call(i,a)&&a!==e&&g(i,a,{get:()=>t[a],enumerable:!(s=R(t,a))||s.enumerable});return i};var B=i=>E(g({},"__esModule",{value:!0}),i);var O={};S(O,{BACK_MUSCLES:()=>m,BodyChart:()=>f,FRONT_MUSCLES:()=>p,INTENSITY_COLORS:()=>c,MUSCLE_GROUPS:()=>v,MUSCLE_MAP:()=>C,ViewSide:()=>b,createBodyPartState:()=>N,extractMuscleGroup:()=>x,extractMuscleSide:()=>T,filterMuscles:()=>L,getMuscleColor:()=>u,isValidIntensity:()=>M});var b=(e=>(e.FRONT="FRONT",e.BACK="BACK",e))(b||{});function M(i){return Number.isInteger(i)&&i>=0&&i<=10}function N(i=0,t=!1){if(!M(i))throw new Error(`Invalid intensity: ${i}. Must be 0-10.`);return{intensity:i,selected:t}}function T(i){return i.endsWith("-left")?"left":i.endsWith("-right")?"right":"central"}function x(i){return i.replace(/-(left|right)$/,"").split("-")[0]}var p=[{id:"head",name:"Head",view:"FRONT",path:"m 11.671635,6.3585449 -0.0482,-2.59085 4.20648,-2.46806 4.42769,2.95361 -0.0405,1.94408 0.24197,-3.34467 -2.03129,-2.31103004 -2.84508,-0.51629 -2.20423,0.52915 -1.9363,2.63077004 z"},{id:"face",name:"Face",view:"FRONT",path:"m 19.748825,6.7034949 0.0203,-2.20747 -3.96689,-2.7637 -3.74099,2.23559 -0.006,2.63528 -0.60741,0.0403 0.27408,1.82447 0.97635,0.33932 0.44244,2.1802901 1.82222,2.06556 2.03518,-0.0607 1.79223,-1.94408 0.35957,-2.2406601 0.97616,-0.33932 0.25159,-1.78416 z"},{id:"neck-right",name:"Right Neck",view:"FRONT",path:"m 13.304665,11.910505 1.64975,2.35202 0.74426,2.62159 -1.73486,-1.38354 -0.86649,-2.97104 z"},{id:"neck-left",name:"Left Neck",view:"FRONT",path:"m 18.385135,11.910505 -1.64975,2.35202 -0.74538,2.62234 1.73486,-1.38354 0.86649,-2.97104 z"},{id:"shoulder-front-left",name:"Left Shoulder (Front)",view:"FRONT",path:"m 19.047795,13.248365 3.55748,1.97916 0.72653,-0.35074 z m -0.107,0.43288 -0.37119,1.73073 2.1846,0.53561 1.40116,-0.49436 z"},{id:"shoulder-side-left",name:"Left Shoulder (Side)",view:"FRONT",path:"m 22.922305,15.657195 0.75814,-0.41 2.40806,1.66799 1.17364,1.50707 0.62662,1.5626 -0.0464,3.70194 -1.3284,-1.72153 0.0407,-2.59376 -0.48842,-0.50049 c 0,0 -3.09778,-3.19058 -3.14371,-3.21401 z m -0.2409,0.10873 c -0.001,0.0525 3.32987,3.54733 3.32987,3.54733 l 0.10067,3.10396 -1.15426,-1.97782 -2.22547,-0.94804 -1.56576,-2.88481 z"},{id:"shoulder-front-right",name:"Right Shoulder (Front)",view:"FRONT",path:"m 12.624785,13.248365 -3.5574599,1.97916 -0.72653,-0.35074 z m 0.107,0.43288 0.37119,1.73073 -2.18459,0.53561 -1.4011499,-0.49436 z"},{id:"shoulder-side-right",name:"Right Shoulder (Side)",view:"FRONT",path:"m 8.7502951,15.657195 -0.75814,-0.41 -2.40806,1.66799 -1.17364,1.50707 -0.62662,1.56259 0.0464,3.70195 1.3284,-1.72153 -0.0407,-2.59376 0.48843,-0.5005 c 0,0 3.09777,-3.19057 3.1437,-3.214 z m 0.2409,0.10873 c 0.002,0.0525 -3.32987,3.54733 -3.32987,3.54733 l -0.10067,3.10396 1.15426,-1.97782 2.22547,-0.94804 1.5657499,-2.88481 z"},{id:"biceps-left",name:"Left Biceps",view:"FRONT",path:"m 27.621665,30.814715 -0.33838,1.70499 -1.81932,-2.54418 -0.6629,-1.26895 z m -2.85271,-2.6096 c -0.0259,-0.0144 -0.0536,-0.0254 -0.0824,-0.0324 l -1.48333,-4.95503 1.00456,-2.08428 1.65511,1.74532 2.23034,6.67667 0.0415,0.93739 c -1.06528,-0.84215 -2.18962,-1.60679 -3.36434,-2.28803 z m 1.6945,-5.75654 1.64893,6.43421 -0.36469,-4.92266 z"},{id:"forearm-left",name:"Left Forearm",view:"FRONT",path:"m 26.955425,32.969125 1.30083,10.28927 -1.10778,0.01 -1.89387,-7.99609 0.19174,-4.53719 z m 1.21978,-1.94971 -0.58729,2.58635 1.11876,9.15614 0.55849,-0.21663 0.2304,-6.77018 z"},{id:"biceps-right",name:"Right Biceps",view:"FRONT",path:"m 4.0746451,30.814715 0.33838,1.70499 1.81931,-2.54418 0.66289,-1.26895 z m 2.8527,-2.6096 c 0.0259,-0.0144 0.0536,-0.0254 0.0824,-0.0324 l 1.48332,-4.95503 -1.00455,-2.08428 -1.65509,1.74532 -2.23034,6.67667 -0.0415,0.93739 c 1.06528,-0.84215 2.18961,-1.60679 3.36433,-2.28803 z m -1.6945,-5.75654 -1.64891,6.43421 0.36468,-4.92266 z"},{id:"forearm-right",name:"Right Forearm",view:"FRONT",path:"m 4.5752651,32.969125 -1.30083,10.28927 1.10778,0.01 1.89387,-7.99609 -0.19174,-4.53719 z m -1.21978,-1.94971 0.58728,2.58635 -1.11875,9.15614 -0.55849,-0.21663 -0.2304,-6.77018 z"},{id:"chest-upper-left",name:"Left Upper Chest (Clavicular)",view:"FRONT",path:"m 20.337455,17.085495 1.72942,3.09103 1.890,0.94 -0.5,0.3 -6.8, -2.1 z"},{id:"chest-lower-left",name:"Left Lower Chest (Sternal)",view:"FRONT",path:"m 16.66,19.72 6.8,2.1 -0.65,0.5 -0.90604,2.63773 -2.09968,0.86537 -3.34524,-1.655 0.2,-3.8 z"},{id:"chest-upper-right",name:"Right Upper Chest (Clavicular)",view:"FRONT",path:"m 11.351215,17.085495 -1.7294199,3.09103 -1.890,0.94 0.5,0.3 6.8,-2.1 z"},{id:"chest-lower-right",name:"Right Lower Chest (Sternal)",view:"FRONT",path:"m 15.03,19.72 -6.8,2.1 0.65,0.5 0.90586,2.63773 2.0996699,0.86537 3.34636,-1.655 -0.2,-3.8 z"},{id:"abs-upper-left",name:"Left Abs (Upper)",view:"FRONT",path:"m 19.641935,34.707615 1.81341,-1.36479 0.15748,1.83347 1.28642,2.37338 -1.98044,2.73652 -1.03109,0.16554 -0.37026,-3.88816 z"},{id:"serratus-anterior-left",name:"Left Serratus Anterior",view:"FRONT",path:"M 19.289,26.152 l -3.11202 -1.40604 0.0937 2.27965 2.80119 1.43603 z M 21.224,27.820 l -1.29355 0.7212 0.14997 -1.70898 z M 20.171,26.183 l 2.47968 -1.03241 -0.9336 2.52093 z M 21.702,27.921 l -1.69005 1.03372 -0.28871 2.0678 1.64975 -1.07533 z"},{id:"obliques-left",name:"Left External Oblique",view:"FRONT",path:"M 18.791,29.025 l -0.0622 1.62387 -2.30308 -0.49961 -0.12448 -2.21722 z M 18.635,31.429 l 0.0311 1.99844 -2.20953 0.59391 -0.0311 -3.1227 z M 21.290,30.444 l -1.48383 1.03372 -0.20622 2.10905 1.64862 -1.32355 z"},{id:"abs-upper-right",name:"Right Abs (Upper)",view:"FRONT",path:"m 12.045985,34.707615 -1.81341,-1.36479 -0.15748,1.83347 -1.2856799,2.37432 1.9804499,2.73595 1.03109,0.16554 0.37119,-3.88721 z"},{id:"abs-lower-right",name:"Right Lower Abs",view:"FRONT",path:"m 15.636055,44.919735 -0.60647,-5.91209 -0.015,-3.84879 -2.18479,-1.07533 -0.24746,7.03017 z"},{id:"abs-lower-left",name:"Left Lower Abs",view:"FRONT",path:"m 16.051865,44.919165 0.60628,-5.91209 0.0154,-3.84915 2.18404,-1.07515 0.24746,7.03017 z"},{id:"serratus-anterior-right",name:"Right Serratus Anterior",view:"FRONT",path:"m 12.399365,26.152365 3.11202,-1.40603 -0.0937,2.27965 -2.80138,1.4364 z m -1.93508,1.6685 1.29355,0.72139 -0.14997,-1.70899 z m 1.05303,-1.637 -2.4793099,-1.03259 0.93361,2.52148 z m -1.5316399,1.73729 1.6900499,1.03372 0.28871,2.06743 -1.64881,-1.07515 z"},{id:"obliques-right",name:"Right External Oblique",view:"FRONT",path:"M 12.897,29.025 l 0.0623 1.62387 2.30327 -0.49961 0.12448 -2.21703 z M 13.053,31.430 l -0.0309 1.99844 2.20973 0.59353 0.0311 -3.1227 z M 10.398,30.445 l 1.48384 1.0339 0.20622 2.10905 -1.64975 -1.32355 z"},{id:"hip-flexor-right",name:"Right Groin / Hip Flexors",view:"FRONT",path:"m 14.404465,45.040075 0.0221,-0.0277 -0.14866,-0.37945 -3.10172,-3.40449 -0.23283,-0.0825 2.05918,5.32009 z m -1.17263,2.01833 1.27705,3.29948 0.42631,-4.04862 -0.25196,-0.64303 z"},{id:"hip-flexor-left",name:"Left Groin / Hip Flexors",view:"FRONT",path:"m 17.284025,45.040455 -0.0221,-0.0281 0.14867,-0.37926 3.10171,-3.40449 0.23246,-0.0825 -2.05843,5.3199 z m 1.17263,2.01795 -1.27706,3.29948 -0.42631,-4.04843 0.25197,-0.64303 z"},{id:"quads-left",name:"Left Quadriceps",view:"FRONT",path:"m 23.419015,50.399125 -0.15504,4.75091 -2.40263,6.60949 0.7362,1.90021 2.36401,-8.34435 z m -0.58154,-11.60825 -0.15485,4.00722 1.31793,7.93154 0.61977,-6.40308 z m -0.38731,5.12268 -2.75152,6.07258 -0.62015,4.87425 1.16232,6.85771 2.51886,-6.98144 0.15504,-7.18764 z"},{id:"adductors-left",name:"Left Adductors",view:"FRONT",path:"m 22.063225,39.369605 v 4.21363 l -2.94574,5.82511 -1.86027,5.78349 0.19365,-4.0072 z m -3.24944,13.42596 -0.0649,0.15467 -1.21294,2.90207 0.78325,7.18803 1.23619,-0.66122 -1.0714,-6.69272 z"},{id:"foot-left",name:"Left Foot",view:"FRONT",path:"m 17.255895,87.868445 0.1243,3.45228 0.28983,1.20638 h 0.87136 l 0.24897,-0.83181 0.29058,-0.0416 -0.0624,0.83181 1.09914,-0.33332 0.29058,-0.16629 1.24444,-0.27033 0.0416,-0.97748 -1.20319,-2.03743 -0.82974,-1.0399 -2.03294,-0.83181 z"},{id:"tibialis-anterior-left",name:"Left Tibialis Anterior",view:"FRONT",path:"m 18.251375,70.441125 0.29058,0.91486 0.6224,3.8681 0.0829,5.15733 -0.87136,5.03304 0.0412,-6.44714 -0.91242,-2.57848 -0.12561,-2.82837 z m 1.9915,2.32915 -0.20753,7.73637 -1.65949,6.23904 1.80478,-0.853 3.00816,-10.83583 -1.03727,-6.82095 z"},{id:"knee-left",name:"Left Knee",view:"FRONT",path:"m 21.404635,64.784375 0.1243,1.12295 -0.87118,1.08171 -0.29058,1.70599 -0.58116,0.24933 -0.49774,-2.57866 -0.33182,-0.91486 0.29058,-0.58247 z m -3.85853,0.0832 0.6224,1.74685 1.3273,2.57867 -0.33182,2.37095 -0.95423,-2.66209 -0.78738,-1.49734 z m 4.97811,-2.37039 -0.95423,5.11609 0.62241,-0.33295 0.49773,1.66381 z"},{id:"quads-right",name:"Right Quadriceps",view:"FRONT",path:"m 8.2694651,50.399125 0.15504,4.75053 2.4026299,6.60968 -0.73638,1.90021 -2.3640099,-8.34435 z m 0.58117,-11.60768 0.15503,4.00684 -1.31754,7.93154 -0.61978,-6.40308 z m 0.38769,5.1223 2.7515099,6.07239 0.61997,4.87425 -1.16232,6.85771 -2.5190499,-6.98163 -0.15504,-7.18801 z"},{id:"adductors-right",name:"Right Adductors",view:"FRONT",path:"m 9.6258251,39.369415 v 4.21363 l 2.9451699,5.8253 1.86028,5.78349 -0.19366,-4.0072 z m 3.2488699,13.42559 0.0647,0.15485 1.21294,2.90207 -0.78307,7.18803 -1.23618,-0.66102 1.0714,-6.69273 z"},{id:"foot-right",name:"Right Foot",view:"FRONT",path:"m 14.433335,87.868265 -0.12448,3.45228 -0.29058,1.20637 h -0.87118 l -0.24877,-0.83181 -0.29059,-0.0416 0.0623,0.83181 -1.09934,-0.33333 -0.29058,-0.16629 -1.2448,-0.27033 -0.0412,-0.97747 1.2031899,-2.03781 0.82975,-1.04009 2.03294,-0.83181 z"},{id:"tibialis-anterior-right",name:"Right Tibialis Anterior",view:"FRONT",path:"m 13.437675,70.440945 -0.29058,0.91486 -0.62241,3.86828 -0.0829,5.15733 0.87174,5.03304 -0.0418,-6.44714 0.91298,-2.57848 0.1243,-2.82837 z m -1.99151,2.32914 0.20735,7.73637 1.65968,6.23904 -1.80497,-0.85299 -3.0079799,-10.83584 1.03728,-6.82095 z"},{id:"knee-right",name:"Right Knee",view:"FRONT",path:"m 10.284405,64.784375 -0.12448,1.12295 0.87118,1.08171 0.29058,1.70599 0.58116,0.24933 0.49774,-2.57866 0.33182,-0.91486 -0.29058,-0.58247 z m 3.85854,0.0832 -0.62241,1.74685 -1.32767,2.57867 0.33182,2.37095 0.95423,-2.66209 0.78832,-1.4964 z m -4.9786799,-2.37058 0.9542299,5.11609 -0.6223999,-0.33313 -0.49793,1.6638 z"},{id:"elbow-right",name:"Right Elbow",view:"FRONT",path:"m 3.2054751,27.370125 0.005,3.09419 -0.57959,1.91184 -0.54539,-2.41185 z"},{id:"hand-right",name:"Right Hand",view:"FRONT",path:"m 4.3904451,43.563145 -1.5198,0.0506 -0.76631,-0.67112 -1.21261996,2.15767 -0.86245,3.32873 0.49386,0.22113 0.59814996,-2.20238 0.50016,0.25356 -0.35639,2.49422 0.62382,0.24345 0.41402,-2.49194 0.55839,0.17851 -0.2262,2.76603 0.76938,0.32268 0.25788,-2.86764 0.4578,-0.0181 0.16611,2.65239 0.65997,0.2633 0.0712,-4.56643 0.34158,-0.19428 1.35316,1.68367 0.32832,-0.34354 -0.72644,-2.0551 z"},{id:"elbow-left",name:"Left Elbow",view:"FRONT",path:"m 28.325215,27.370125 -0.005,3.09419 0.57959,1.91184 0.54538,-2.41185 z"},{id:"hand-left",name:"Left Hand",view:"FRONT",path:"m 27.140245,43.563145 1.5198,0.0506 0.76631,-0.67111 1.21262,2.15766 0.86245,3.32873 -0.49386,0.22113 -0.59815,-2.20238 -0.50016,0.25356 0.35639,2.49422 -0.62382,0.24345 -0.41402,-2.49194 -0.55839,0.17851 0.2262,2.76603 -0.76938,0.32268 -0.25788,-2.86764 -0.4578,-0.0181 -0.16611,2.6524 -0.65997,0.26329 -0.0712,-4.56643 -0.34158,-0.19428 -1.35316,1.68368 -0.32832,-0.34355 0.72644,-2.0551 z"}];var m=[{id:"head-back",name:"Head (Posterior)",view:"BACK",path:"m 48.157455,6.3585449 0.44208,-0.14964 0.16111,0.16427 1.48163,4.0475101 2.32401,1.45118 2.39971,-1.52387 0.97577,-3.6896901 0.52752,-0.55908 0.23367,0.0981 0.24198,-3.34467 -2.03129,-2.31103004 -2.84509,-0.51629 -2.20422,0.52915 -1.93631,2.63077004 z"},{id:"nape",name:"Nape",view:"BACK",path:"m 52.369695,12.105075 -2.35767,-1.55045 -1.47119,-3.9514301 -0.60741,0.0403 0.27409,1.82447 0.97635,0.33932 0.7613,2.2157201 0.33017,1.06849 0.0895,2.14894 1.16448,0.008 0.10563,-0.70833 0.54716,-0.0606 z m 1.01793,1.47595 0.23768,0.64982 1.38107,-0.004 0.01,-2.38784 0.25971,-0.79061 0.57215,-2.1698001 0.76359,-0.41018 0.25158,-1.78416 -0.62859,0.0193 -1.08488,3.8998101 -2.39725,1.46684 0.2768,1.48507 z"},{id:"traps-upper-left",name:"Left Trapezius (Upper)",view:"BACK",path:"M 49.625,14.629 L 49.688,12.005 L 48.974,13.157 L 44.594,14.654 L 45.945,16.925 L 51.222,16.925 L 51.183,14.550 Z"},{id:"traps-mid-left",name:"Left Trapezius (Mid)",view:"BACK",path:"M 46.034,17.075 L 48.920,21.925 L 51.303,21.925 L 51.224,17.075 Z"},{id:"traps-lower-left",name:"Left Trapezius (Lower)",view:"BACK",path:"M 49.009,22.075 L 49.572,23.022 L 51.403,28.104 L 51.305,22.075 Z"},{id:"traps-upper-right",name:"Right Trapezius (Upper)",view:"BACK",path:"M 55.439,14.729 L 55.376,12.104 L 56.090,13.256 L 60.470,14.754 L 59.179,16.925 L 53.844,16.925 L 53.881,14.649 Z"},{id:"traps-mid-right",name:"Right Trapezius (Mid)",view:"BACK",path:"M 59.089,17.075 L 56.204,21.925 L 53.763,21.925 L 53.842,17.075 Z"},{id:"traps-lower-right",name:"Right Trapezius (Lower)",view:"BACK",path:"M 56.114,22.075 L 55.492,23.121 L 53.661,28.203 L 53.761,22.075 Z"},{id:"lats-upper-left",name:"Left Lats (Upper)",view:"BACK",path:"M 44.144,15.285 L 39.888,20.286 L 39.426,22.749 L 41.263,21.510 L 44.025,20.355 L 45.663,23.400 L 49.103,23.400 Z"},{id:"deltoid-rear-left",name:"Left Rear Deltoid",view:"BACK",path:"M 42.201,16.586 L 40.626,18.152 L 39.736,20.156 L 43.992,15.155 Z"},{id:"lats-mid-left",name:"Left Lats (Mid)",view:"BACK",path:"M 45.771,23.600 L 45.872,23.789 L 47.009,29.286 L 47.023,30.400 L 51.080,30.400 L 51.053,28.314 L 49.185,23.600 Z"},{id:"lats-lower-left",name:"Left Lats (Lower)",view:"BACK",path:"M 47.026,30.600 L 47.086,35.145 L 51.156,36.255 L 51.082,30.600 Z"},{id:"deltoid-rear-right",name:"Right Rear Deltoid",view:"BACK",path:"M 62.863,16.686 L 64.438,18.251 L 65.328,20.255 L 61.073,15.254 Z"},{id:"lats-upper-right",name:"Right Lats (Upper)",view:"BACK",path:"M 60.921,15.384 L 65.176,20.385 L 65.290,22.849 L 63.801,21.609 L 61.039,20.454 L 59.455,23.400 L 56.022,23.400 Z"},{id:"lats-mid-right",name:"Right Lats (Mid)",view:"BACK",path:"M 59.347,23.600 L 59.192,23.888 L 58.055,29.385 L 58.042,30.400 L 53.986,30.400 L 54.012,28.413 L 55.918,23.600 Z"},{id:"lats-lower-right",name:"Right Lats (Lower)",view:"BACK",path:"M 58.039,30.600 L 57.979,35.245 L 53.908,36.354 L 53.983,30.600 Z"},{id:"triceps-long-left",name:"Left Triceps (Long Head)",view:"BACK",path:"M 43.593,21.039 L 44.920,23.967 L 43.615,25.653 L 43.186,27.069 L 39.209,29.802 Z"},{id:"triceps-lateral-left",name:"Left Triceps (Lateral Head)",view:"BACK",path:"M 43.459,20.972 L 39.075,29.735 L 38.871,25.461 L 39.407,23.674 L 41.242,21.927 Z"},{id:"hand-back-left",name:"Left Hand (Back)",view:"BACK",path:"M 40.716955,42.424835 l -1.5182,0.0863 -0.78184,-0.65295 -1.16168,2.1855 -0.78414,3.34805 0.49892,0.20949 0.54632,-2.2158 0.50597,0.24175 -0.29779,2.5019 0.62936,0.22875 0.35546,-2.50096 0.56242,0.16536 -0.16126,2.77057 0.77674,0.30455 0.19056,-2.87291 0.45724,-0.0289 0.22827,2.64778 0.66597,0.24774 -0.0359,-4.56685 0.33693,-0.20224 1.39227,1.65147 0.32017,-0.35115 -0.77444,-2.03749 z"},{id:"forearm-flexors-left",name:"Forearm Flexors Left",view:"BACK",path:"M 40.775,29.006 L 42.870,27.644 L 42.187,29.635 L 42.603,34.383 L 40.799,42.081 L 39.814,42.253 Z"},{id:"forearm-extensors-left",name:"Forearm Extensors Left",view:"BACK",path:"M 39.665,42.242 L 38.305,41.501 L 37.998,34.491 L 38.635,31.429 L 39.245,30.209 L 40.625,28.994 Z"},{id:"triceps-long-right",name:"Right Triceps (Long Head)",view:"BACK",path:"M 61.376,21.213 L 60.056,24.145 L 61.330,26.199 L 61.657,27.251 L 65.780,29.966 Z"},{id:"triceps-lateral-right",name:"Right Triceps (Lateral Head)",view:"BACK",path:"M 61.510,21.146 L 65.914,29.899 L 66.108,25.624 L 65.568,23.839 L 63.729,22.096 Z"},{id:"hand-back-right",name:"Right Hand (Back)",view:"BACK",path:"M 64.301385,42.592325 l 1.51839,0.0828 0.78033,-0.65476 1.16673,2.18281 0.79187,3.34623 -0.49843,0.21064 -0.55144,-2.21453 -0.50541,0.24292 0.30356,2.5012 -0.62882,0.23021 -0.36124,-2.50014 -0.56203,0.16666 0.16765,2.77019 -0.77603,0.30634 -0.19719,-2.87245 -0.45732,-0.0278 -0.22215,2.64829 -0.66539,0.24928 0.0254,-4.56692 -0.3374,-0.20146 -1.38845,1.65469 -0.32098,-0.35041 0.76973,-2.03928 z"},{id:"forearm-flexors-right",name:"Forearm Flexors Right",view:"BACK",path:"M 65.204,42.420 L 63.925,29.007 L 61.764,27.798 L 62.786,29.733 L 62.397,34.555 L 64.219,42.248 Z"},{id:"forearm-extensors-right",name:"Forearm Extensors Right",view:"BACK",path:"M 64.075,28.993 L 65.353,42.405 L 66.712,41.663 L 67.002,34.653 L 66.358,31.591 L 65.745,30.373 Z"},{id:"spine",name:"Spine",view:"BACK",path:"m 51.733705,14.788555 0.53876,25.33066 0.48967,-0.0297 0.65658,-25.3387 -0.28147,-0.84188 -1.25059,-4.9e-4 z"},{id:"lower-back-erectors-left",name:"Erector Spinae Left",view:"BACK",path:"M 52.100,37.310 L 49.537,36.465 L 50.244,40.788 L 52.200,42.030 L 52.200,40.270 L 52.150,40.280 Z"},{id:"lower-back-ql-left",name:"Quadratus Lumborum Left",view:"BACK",path:"M 49.389,36.490 L 46.240,35.460 L 44.720,39.420 L 50.096,40.812 Z"},{id:"lower-back-erectors-right",name:"Erector Spinae Right",view:"BACK",path:"M 52.800,42.030 L 52.800,40.270 L 52.850,40.260 L 52.900,37.290 L 55.289,36.625 L 54.805,40.801 Z"},{id:"lower-back-ql-right",name:"Quadratus Lumborum Right",view:"BACK",path:"M 55.439,36.643 L 55.980,36.470 L 58.320,35.720 L 59.660,39.450 L 54.955,40.819 Z"},{id:"gluteus-medius-left",name:"Gluteus Medius Left",view:"BACK",path:"M 50.191,41.481 L 44.740,39.690 L 43.830,41.580 L 43.431,44.301 Z"},{id:"gluteus-maximus-left",name:"Gluteus Maximus Left",view:"BACK",path:"M 50.249,41.619 L 43.489,44.439 L 44.410,50.520 L 47.180,51.030 L 51.620,49.090 L 52.200,49.480 L 52.200,42.880 Z"},{id:"gluteus-medius-right",name:"Gluteus Medius Right",view:"BACK",path:"M 55.274,41.079 L 61.354,45.519 L 60.640,42.150 L 59.740,39.860 Z"},{id:"gluteus-maximus-right",name:"Gluteus Maximus Right",view:"BACK",path:"M 55.186,41.201 L 52.800,42.880 L 52.800,49.480 L 53.570,49.090 L 57.680,50.760 L 60.500,50.600 L 61.266,45.641 Z"},{id:"knee-back-left",name:"Left Back Knee",view:"BACK",path:"m 51.176145,64.073985 -1.20605,3.01461 0.70738,0.26558 0.89754,3.51771 -0.55801,-4.01191 z m -5.08496,-3.15003 0.63355,1.8609 0.16813,2.03261 0.61314,1.93117 -0.90585,-0.0851 -0.28534,2.15982 z"},{id:"knee-back-right",name:"Right Back Knee",view:"BACK",path:"m 54.019305,64.073985 1.20605,3.01461 -0.70737,0.26558 -0.89755,3.51771 0.55802,-4.01191 z m 5.08496,-3.15003 -0.63355,1.8609 -0.16813,2.03261 -0.61313,1.93117 0.90584,-0.0851 0.28534,2.15982 z"},{id:"calves-gastroc-medial-left",name:"Gastrocnemius Medial Left",view:"BACK",path:"M 50.568,67.512 L 51.669,72.509 L 51.379,75.532 L 51.292,76.825 L 48.983,76.825 Z"},{id:"calves-gastroc-lateral-left",name:"Gastrocnemius Lateral Left",view:"BACK",path:"M 50.218,67.512 L 48.633,76.825 L 46.283,76.825 L 45.533,74.263 L 46.783,67.088 Z"},{id:"calves-soleus-left",name:"Soleus Left",view:"BACK",path:"M 46.386,77.175 L 51.269,77.175 L 50.701,85.598 L 49.037,86.233 Z"},{id:"calves-gastroc-medial-right",name:"Gastrocnemius Medial Right",view:"BACK",path:"M 54.628,67.512 L 53.526,72.509 L 53.816,75.532 L 53.903,76.825 L 56.213,76.825 Z"},{id:"calves-gastroc-lateral-right",name:"Gastrocnemius Lateral Right",view:"BACK",path:"M 54.978,67.512 L 56.563,76.825 L 58.912,76.825 L 59.662,74.263 L 58.412,67.088 Z"},{id:"calves-soleus-right",name:"Soleus Right",view:"BACK",path:"M 53.927,77.175 L 58.810,77.175 L 56.158,86.233 L 54.495,85.598 Z"},{id:"foot-back-left",name:"Left Foot (Back)",view:"BACK",path:"M 50.933115,88.340995 l 0.85194,1.3581 0.37189,0.79238 -0.15588,1.21774 -0.76984,0.74446 -1.51185,0.12543 -1.1299,-0.29192 -0.24225,-0.95894 0.80765,-1.30405 -0.22562,-0.85987 0.29679,-0.84153 -0.0194,-1.81524 1.53568,-0.54817 z m -1.19598,0.4675 0.15943,1.25776 -0.6023,0.97431 m -0.54436,0.29544 1.06474,0.40084 1.55326,-0.65137 z"},{id:"hamstrings-medial-left",name:"Medial Hamstrings (Semis) Left",view:"BACK",path:"M 49.550,50.504 L 51.751,49.461 L 52.389,49.692 L 52.424,51.499 L 52.499,56.145 L 50.521,62.188 L 50.997,63.602 L 49.569,66.897 L 48.755,66.754 Z"},{id:"hamstrings-lateral-left",name:"Lateral Hamstrings (Biceps) Left",view:"BACK",path:"M 49.400,50.496 L 48.605,66.746 L 47.803,66.596 L 47.302,64.480 L 47.133,62.723 L 44.712,54.565 L 44.369,50.918 L 47.200,51.500 Z"},{id:"foot-back-right",name:"Right Foot (Back)",view:"BACK",path:"M 54.262335,88.340995 l -0.85194,1.3581 -0.37189,0.79238 0.15589,1.21774 0.76983,0.74446 1.51186,0.12543 1.12989,-0.29192 0.24225,-0.95894 -0.80765,-1.30405 0.22563,-0.85987 -0.29679,-0.84153 0.0194,-1.81524 -1.53568,-0.54817 z m 1.19598,0.4675 -0.15943,1.25776 0.6023,0.97431 m 0.54436,0.29544 -1.06474,0.40084 -1.55326,-0.65137 z"},{id:"hamstrings-medial-right",name:"Medial Hamstrings (Semis) Right",view:"BACK",path:"M 57.425,51.196 L 56.565,66.806 L 55.759,66.965 L 54.331,63.670 L 54.807,62.256 L 52.829,56.213 L 52.904,51.567 L 52.956,49.769 L 53.520,49.498 Z"},{id:"hamstrings-lateral-right",name:"Lateral Hamstrings (Biceps) Right",view:"BACK",path:"M 57.575,51.204 L 60.625,50.950 L 60.616,54.633 L 58.195,62.791 L 58.026,64.547 L 57.525,66.663 L 56.715,66.814 Z"}];var v={"Head & Neck":["head","face","neck-right","neck-left","head-back","nape"],Shoulders:["shoulder-front-left","shoulder-front-right","shoulder-side-left","shoulder-side-right","deltoid-rear-left","deltoid-rear-right","traps-upper-left","traps-mid-left","traps-lower-left","traps-upper-right","traps-mid-right","traps-lower-right"],Arms:["biceps-left","biceps-right","triceps-long-left","triceps-lateral-left","triceps-long-right","triceps-lateral-right","forearm-left","forearm-right","forearm-flexors-left","forearm-extensors-left","forearm-flexors-right","forearm-extensors-right","elbow-left","elbow-right"],Chest:["chest-upper-left","chest-upper-right","chest-lower-left","chest-lower-right"],Back:["lats-upper-left","lats-mid-left","lats-lower-left","lats-upper-right","lats-mid-right","lats-lower-right","lower-back-erectors-left","lower-back-ql-left","lower-back-erectors-right","lower-back-ql-right","spine","gluteus-medius-left","gluteus-maximus-left","gluteus-medius-right","gluteus-maximus-right"],Abdominals:["abs-upper-left","abs-upper-right","abs-lower-left","abs-lower-right","serratus-anterior-left","serratus-anterior-right","obliques-left","obliques-right"],Legs:["quads-left","quads-right","hamstrings-medial-left","hamstrings-lateral-left","hamstrings-medial-right","hamstrings-lateral-right","adductors-left","adductors-right","tibialis-anterior-left","tibialis-anterior-right","calves-gastroc-medial-left","calves-gastroc-lateral-left","calves-soleus-left","calves-gastroc-medial-right","calves-gastroc-lateral-right","calves-soleus-right","knee-left","knee-right","knee-back-left","knee-back-right","hip-flexor-left","hip-flexor-right"],"Hands & Feet":["hand-left","hand-right","foot-left","foot-right","hand-back-left","hand-back-right","foot-back-left","foot-back-right"]};var C=[...p,...m];var c={0:"#94a3b8",1:"#fde047",2:"#facc15",3:"#eab308",4:"#fb923c",5:"#f97316",6:"#ea580c",7:"#ef4444",8:"#dc2626",9:"#b91c1c",10:"#7f1d1d"};function u(i,t){if(i.intensity>0){let e=Math.min(Math.round(i.intensity),10);return c[e]||c[10]}return c[0]}function L(i){return i==="FRONT"?p:m}var o="http://www.w3.org/2000/svg";function y(i){return{className:"",ariaLabel:"",showViewLabel:!1,enableTransitions:!0,onMuscleClick:()=>{},onMuscleHover:()=>{},...i}}var f=class{constructor(t,e){this.hoveredMuscle=null;this.wrapperEl=null;this.svgEl=null;this.labelEl=null;this.musclePaths=new Map;this.muscleData=[];this.eventCleanup=[];this.container=t,this.options=y(e),this.build()}update(t){let e=t.view!==void 0&&t.view!==this.options.view;Object.assign(this.options,t),e?(this.destroy(),this.build()):this.refreshAllPaths()}destroy(){for(let t of this.eventCleanup)t();this.eventCleanup=[],this.musclePaths.clear(),this.muscleData=[],this.wrapperEl&&this.container.contains(this.wrapperEl)&&this.container.removeChild(this.wrapperEl),this.wrapperEl=null,this.svgEl=null,this.labelEl=null}build(){let{view:t,className:e,ariaLabel:s,showViewLabel:a,enableTransitions:n}=this.options;this.muscleData=L(t);let h=t==="FRONT"?"0 0 35 93":"37 0 35 93";this.wrapperEl=document.createElement("div"),this.wrapperEl.className=`body-chart-container ${e}`.trim(),w(this.wrapperEl,{position:"relative",width:"100%",height:"100%",display:"flex",justifyContent:"center",alignItems:"center",padding:"1rem"}),this.wrapperEl.setAttribute("role","img"),this.wrapperEl.setAttribute("aria-label",s||`${t==="FRONT"?"Anterior":"Posterior"} body map view`),this.svgEl=document.createElementNS(o,"svg"),this.svgEl.setAttribute("viewBox",h),this.svgEl.classList.add("body-chart-svg"),this.svgEl.setAttribute("aria-hidden","true"),w(this.svgEl,{height:"auto",width:"100%",maxHeight:"70vh",maxWidth:"400px",filter:"drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3))",...n?{transition:"all 200ms ease-out"}:{}}),this.svgEl.appendChild(this.buildDefs());let l=document.createElementNS(o,"g");l.classList.add("body-chart-background"),l.setAttribute("aria-hidden","true"),l.style.opacity="0.1",l.style.pointerEvents="none";for(let r of this.muscleData){let d=document.createElementNS(o,"path");d.setAttribute("d",r.path),d.setAttribute("fill","#cbd5e1"),l.appendChild(d)}this.svgEl.appendChild(l);for(let r of this.muscleData){let d=this.buildMusclePath(r);this.svgEl.appendChild(d),this.musclePaths.set(r.id,d)}this.wrapperEl.appendChild(this.svgEl),a&&(this.labelEl=this.buildViewLabel(t),this.wrapperEl.appendChild(this.labelEl)),this.container.appendChild(this.wrapperEl),this.refreshAllPaths()}buildDefs(){let t=document.createElementNS(o,"defs"),e=document.createElementNS(o,"filter");e.setAttribute("id","glow");let s=document.createElementNS(o,"feGaussianBlur");s.setAttribute("stdDeviation","0.4"),s.setAttribute("result","coloredBlur");let a=document.createElementNS(o,"feMerge"),n=document.createElementNS(o,"feMergeNode");n.setAttribute("in","coloredBlur");let h=document.createElementNS(o,"feMergeNode");h.setAttribute("in","SourceGraphic"),a.appendChild(n),a.appendChild(h),e.appendChild(s),e.appendChild(a),t.appendChild(e);let l=document.createElementNS(o,"filter");l.setAttribute("id","shadow");let r=document.createElementNS(o,"feDropShadow");return r.setAttribute("dx","0"),r.setAttribute("dy","0.2"),r.setAttribute("stdDeviation","0.3"),r.setAttribute("flood-opacity","0.3"),l.appendChild(r),t.appendChild(l),t}buildMusclePath(t){let e=document.createElementNS(o,"path");e.setAttribute("d",t.path),e.classList.add("body-chart-muscle"),e.setAttribute("role","button"),e.setAttribute("tabindex","0");let s=document.createElementNS(o,"title");s.textContent=t.name,e.appendChild(s);let a=()=>{this.hoveredMuscle=t.id,this.options.onMuscleHover(t.id),this.refreshPath(t.id)},n=()=>{let r=this.hoveredMuscle;this.hoveredMuscle=null,this.options.onMuscleHover(null),r&&this.refreshPath(r)},h=()=>{this.options.onMuscleClick(t.id,t.name)},l=r=>{(r.key==="Enter"||r.key===" ")&&(r.preventDefault(),this.options.onMuscleClick(t.id,t.name))};return e.addEventListener("mouseenter",a),e.addEventListener("mouseleave",n),e.addEventListener("click",h),e.addEventListener("keydown",l),this.eventCleanup.push(()=>{e.removeEventListener("mouseenter",a),e.removeEventListener("mouseleave",n),e.removeEventListener("click",h),e.removeEventListener("keydown",l)}),e}refreshAllPaths(){for(let t of this.musclePaths.keys())this.refreshPath(t)}refreshPath(t){let e=this.musclePaths.get(t);if(!e)return;let s=this.options.bodyState[t]||{intensity:0,selected:!1},a=s.selected||!1,n=this.hoveredMuscle===t,h=u(s,n),l=s.intensity===0&&!a?.6:1,r=this.muscleData.find(d=>d.id===t);e.setAttribute("fill",h),e.setAttribute("stroke",a?"#ffffff":"#1e293b"),e.setAttribute("stroke-width",a?"0.3":"0.1"),e.setAttribute("aria-label",`${(r==null?void 0:r.name)||t}${a?" (selected)":""}${s.intensity>0?` - intensity ${s.intensity}`:""}`),e.style.fillOpacity=String(l),e.style.filter=a||n?"url(#glow)":"none",e.style.cursor="pointer",e.style.transition=this.options.enableTransitions?"all 200ms ease-out":"none",e.style.outline="none"}buildViewLabel(t){let e=document.createElement("div");return e.className="body-chart-view-label",e.setAttribute("aria-hidden","true"),w(e,{position:"absolute",bottom:"1rem",left:"50%",transform:"translateX(-50%)",color:"#64748b",fontSize:"0.875rem",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase",pointerEvents:"none",backgroundColor:"rgba(15, 23, 42, 0.5)",padding:"0.25rem 0.75rem",borderRadius:"9999px",backdropFilter:"blur(4px)",zIndex:"10"}),e.textContent=`${t==="FRONT"?"Anterior":"Posterior"} View`,e}};function w(i,t){for(let[e,s]of Object.entries(t))i.style[e]=s}return B(O);})();
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090c;--s1:#0d1117;--s2:#141a22;--s3:#1c2430;
+  --b1:#1e2a38;--b2:#243040;--b3:#2c3a4a;
+  --acc:#00e5ff;--acc2:#e8ff47;
+  --forza:#ff3333;--iper:#3399ff;--pot:#aa44ff;--res:#33cc66;
+  --warn:#ff8c00;
+  --text:#dde4ec;--muted:#566070;--muted2:#38474f;
+  --FD:'Bebas Neue',sans-serif;--FM:'DM Mono',monospace;--FB:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--FB);min-height:100vh;overflow-x:hidden}
+.hdr{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--b1);background:rgba(13,17,23,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:200}
+.logo{font-family:var(--FD);font-size:1.2rem;letter-spacing:3px;color:var(--acc);flex-shrink:0}
+.logo span{color:var(--text);opacity:0.25}
+.scheda-name{background:transparent;border:none;border-bottom:1px solid var(--b2);color:var(--text);font-family:var(--FD);font-size:1rem;letter-spacing:2px;padding:2px 6px;outline:none;flex:1;max-width:260px;transition:border-color 0.2s}
+.scheda-name:focus{border-bottom-color:var(--acc)}
+.scheda-name::placeholder{color:var(--muted2)}
+.hdr-right{margin-left:auto;display:flex;gap:7px;align-items:center}
+.sess-count{font-family:var(--FM);font-size:0.55rem;color:var(--muted);letter-spacing:1px}
+.mode-toggle{display:flex;gap:2px;background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:3px}
+.mode-btn{background:transparent;border:none;color:var(--muted);font-family:var(--FM);font-size:0.54rem;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:5px;cursor:pointer;transition:all 0.15s}
+.mode-btn.on{background:var(--acc2);color:#000;font-weight:600}
+.btn-save{background:var(--acc2);border:none;border-radius:7px;color:#000;font-family:var(--FD);font-size:0.8rem;letter-spacing:2px;padding:7px 14px;cursor:pointer;transition:all 0.14s}
+.btn-save:disabled{background:var(--b2);color:var(--muted);cursor:not-allowed}
+
+/* MAP */
+.map-row{display:flex;gap:12px;padding:14px 20px;background:var(--s1);border-bottom:1px solid var(--b1);align-items:flex-start}
+.map-wrap{width:160px;flex-shrink:0}
+.map-wrap>div{width:100%}
+.map-wrap svg{width:100%!important;height:auto!important}
+.map-controls{display:flex;flex-direction:column;gap:10px;flex:1}
+.map-title{font-family:var(--FM);font-size:0.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.ctrl-group{display:flex;flex-direction:column;gap:5px}
+.ctrl-lbl{font-family:var(--FM);font-size:0.5rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2)}
+.btn-row{display:flex;gap:4px;flex-wrap:wrap}
+.mini-btn{background:var(--s2);border:1px solid var(--b1);border-radius:6px;color:var(--muted);font-family:var(--FM);font-size:0.54rem;letter-spacing:1px;padding:4px 9px;cursor:pointer;transition:all 0.14s;white-space:nowrap}
+.mini-btn:hover{border-color:var(--b2);color:var(--text)}
+.mini-btn.on{background:rgba(0,229,255,0.08);border-color:var(--acc);color:var(--acc)}
+.mini-btn.on-forza{background:rgba(255,51,51,0.1);border-color:var(--forza);color:var(--forza)}
+.mini-btn.on-iper{background:rgba(51,153,255,0.1);border-color:var(--iper);color:var(--iper)}
+.mini-btn.on-pot{background:rgba(170,68,255,0.1);border-color:var(--pot);color:var(--pot)}
+.mini-btn.on-res{background:rgba(51,204,102,0.1);border-color:var(--res);color:var(--res)}
+.stim-legend{display:flex;gap:8px;flex-wrap:wrap}
+.stim-dot{display:flex;align-items:center;gap:3px;font-family:var(--FM);font-size:0.5rem;color:var(--muted)}
+.stim-pip{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* VISIONE */
+.visione-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 20px;background:var(--s1);border-bottom:1px solid var(--b1)}
+.vis-lbl{font-family:var(--FM);font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+.vis-chips{display:flex;gap:4px;flex-wrap:wrap}
+.vis-chip{background:var(--s2);border:1px solid var(--b1);border-radius:6px;color:var(--muted);font-family:var(--FM);font-size:0.54rem;padding:4px 9px;cursor:pointer;transition:all 0.14s}
+.vis-chip.on{background:rgba(0,229,255,0.08);border-color:var(--acc);color:var(--acc)}
+.vis-sess-chips{display:flex;gap:4px;flex-wrap:wrap}
+.vis-sess-chip{display:flex;align-items:center;gap:4px;background:var(--s2);border:1px solid var(--b1);border-radius:6px;color:var(--muted);font-family:var(--FM);font-size:0.52rem;padding:3px 8px;cursor:pointer;transition:all 0.14s}
+.vis-sess-chip.on{border-color:var(--acc);color:var(--acc)}
+.vis-pip{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.vis-badge{font-family:var(--FM);font-size:0.5rem;color:var(--acc2);background:rgba(232,255,71,0.08);border:1px solid rgba(232,255,71,0.2);border-radius:5px;padding:2px 6px}
+
+/* SESS BAR */
+.sess-bar{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:10px 20px;background:var(--s1);border-bottom:1px solid var(--b1);min-height:48px}
+.sess-bar-lbl{font-family:var(--FM);font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+.sess-chip{background:var(--s2);border:1px solid var(--b2);border-radius:7px;padding:4px 9px;display:flex;align-items:center;gap:6px;cursor:default;transition:border-color 0.14s}
+.sess-chip-pip{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sess-chip-name{font-family:var(--FM);font-size:0.58rem;color:var(--text)}
+.sess-chip-meta{font-family:var(--FM);font-size:0.52rem;color:var(--muted)}
+.sess-chip-del{cursor:pointer;color:var(--muted);font-size:0.72rem;transition:color 0.12s}
+.sess-chip-del:hover{color:var(--forza)}
+.sess-empty{font-family:var(--FM);font-size:0.58rem;color:var(--muted2)}
+
+/* BUILDER */
+.builder{padding:14px 20px;border-bottom:1px solid var(--b1);background:var(--s1)}
+.builder-title{font-family:var(--FD);font-size:1rem;letter-spacing:2px;margin-bottom:10px}
+.brow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.brow-lbl{font-family:var(--FM);font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+/* limit bar */
+.limit-bar{display:flex;align-items:center;gap:7px;padding:5px 0;display:none}
+.limit-bar.show{display:flex}
+.limit-dots{display:flex;gap:2px}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--b2);transition:background 0.2s}
+.ldot.used{background:var(--acc)}
+.ldot.warn{background:var(--warn)}
+.ldot.full{background:var(--forza)}
+.limit-txt{font-family:var(--FM);font-size:0.54rem;color:var(--muted)}
+.limit-txt.warn{color:var(--warn)}
+.limit-txt.full{color:var(--forza)}
+
+/* sel ex row */
+.sel-row{min-height:28px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;padding:6px 0;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);margin:8px 0}
+.sel-empty{font-family:var(--FM);font-size:0.56rem;color:var(--muted2)}
+.sel-pill{display:flex;align-items:center;gap:3px;border-radius:5px;padding:2px 7px;font-family:var(--FM);font-size:0.56rem;cursor:pointer;transition:opacity 0.14s}
+.sel-pill:hover{opacity:0.6}
+
+/* confirm */
+.confirm-panel{background:var(--s2);border:1px solid var(--b2);border-radius:10px;padding:10px 13px;display:none;margin-bottom:8px}
+.confirm-panel.show{display:block}
+.confirm-title{font-family:var(--FM);font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.confirm-list{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.confirm-row{display:flex;align-items:center;gap:6px}
+.confirm-name{font-size:0.74rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci{background:var(--s1);border:1px solid var(--b1);border-radius:5px;color:var(--acc);font-family:var(--FD);font-size:0.95rem;width:38px;text-align:center;padding:3px 4px;outline:none;transition:border-color 0.14s}
+.ci:focus{border-color:var(--acc)}
+.ci.kg{color:var(--muted);font-family:var(--FM);font-size:0.65rem;width:46px}
+.ci.kg:focus{color:var(--acc)}
+.csep{font-family:var(--FM);font-size:0.54rem;color:var(--muted2)}
+.confirm-actions{display:flex;gap:7px;justify-content:flex-end}
+.btn-add{background:var(--acc);border:none;border-radius:7px;color:#000;font-family:var(--FD);font-size:0.82rem;letter-spacing:2px;padding:7px 18px;cursor:pointer;transition:all 0.14s}
+.btn-add:hover{background:#00ccee}
+.btn-add:disabled{background:var(--b2);color:var(--muted);cursor:not-allowed}
+.btn-cancel{background:transparent;border:1px solid var(--b2);border-radius:7px;color:var(--muted);font-family:var(--FM);font-size:0.58rem;padding:7px 13px;cursor:pointer;transition:all 0.14s;letter-spacing:1px;text-transform:uppercase}
+.btn-cancel:hover{border-color:var(--muted);color:var(--text)}
+.confirm-trigger-row{display:flex;justify-content:flex-end}
+
+/* POOL */
+.pool{padding:14px 20px;background:var(--bg)}
+.pool-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.pool-title{font-family:var(--FD);font-size:1rem;letter-spacing:2px}
+.pool-tabs{display:flex;gap:2px;background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:2px}
+.ptab{background:transparent;border:none;color:var(--muted);font-family:var(--FM);font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;padding:4px 11px;border-radius:5px;cursor:pointer;transition:all 0.14s}
+.ptab.on{background:var(--acc);color:#000;font-weight:600}
+.missing-alert{background:rgba(255,140,0,0.07);border:1px solid rgba(255,140,0,0.25);border-radius:8px;padding:8px 12px;font-family:var(--FM);font-size:0.58rem;color:#ffaa44;line-height:1.6;display:none;margin-bottom:8px}
+.missing-alert.show{display:block}
+.pool-cat{margin-bottom:8px}
+.pool-cat-hdr{font-family:var(--FM);font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;padding:5px 0 5px;display:flex;align-items:center;gap:7px}
+.pool-cat-line{flex:1;height:1px;background:var(--b1)}
+.pool-chips{display:flex;flex-wrap:wrap;gap:4px}
+.ex-chip{background:var(--s2);border:1px solid var(--b1);border-radius:6px;color:var(--text);font-family:var(--FM);font-size:0.6rem;padding:4px 9px;cursor:pointer;transition:all 0.14s;white-space:nowrap}
+.ex-chip:hover{border-color:var(--b3);transform:translateY(-1px)}
+.ex-chip.used-forza{background:rgba(255,51,51,0.1);border-color:rgba(255,51,51,0.4);color:var(--forza)}
+.ex-chip.used-iper{background:rgba(51,153,255,0.1);border-color:rgba(51,153,255,0.4);color:var(--iper)}
+.ex-chip.used-pot{background:rgba(170,68,255,0.1);border-color:rgba(170,68,255,0.4);color:var(--pot)}
+.ex-chip.used-res{background:rgba(51,204,102,0.1);border-color:rgba(51,204,102,0.4);color:var(--res)}
+.ex-chip.rec{box-shadow:0 0 0 1px var(--acc2);color:var(--acc2);background:rgba(232,255,71,0.05);border-color:rgba(232,255,71,0.3)}
+.ex-chip.miss{box-shadow:0 0 0 1px rgba(255,140,0,0.5);background:rgba(255,140,0,0.06);border-color:rgba(255,140,0,0.35);color:#ffaa44}
+
+/* SCHEDA VIEW */
+.scheda-view{padding:14px 20px;display:none}
+.scheda-view.show{display:block}
+.sv-sess{background:var(--s1);border:1px solid var(--b1);border-radius:11px;margin-bottom:10px;overflow:hidden}
+.sv-hdr{padding:9px 13px;background:var(--s2);border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:8px}
+.sv-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sv-name{font-family:var(--FD);font-size:0.95rem;letter-spacing:1px;flex:1}
+.sv-meta{font-family:var(--FM);font-size:0.52rem;color:var(--muted)}
+.sv-body{padding:6px 0}
+.sv-ex{display:flex;align-items:center;gap:7px;padding:6px 13px;border-bottom:1px solid var(--b1)}
+.sv-ex:last-child{border-bottom:none}
+.sv-moves{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+.sv-mv{background:transparent;border:1px solid var(--b1);border-radius:3px;color:var(--muted);font-size:0.55rem;width:16px;height:13px;cursor:pointer;transition:all 0.12s;display:flex;align-items:center;justify-content:center}
+.sv-mv:hover{border-color:var(--b2);color:var(--text)}
+.sv-mv:disabled{opacity:0.3;cursor:not-allowed}
+.sv-exname{font-size:0.74rem;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sf{background:var(--s2);border:1px solid var(--b1);border-radius:5px;color:var(--acc);font-family:var(--FD);font-size:0.9rem;width:35px;text-align:center;padding:3px 3px;outline:none;transition:border-color 0.14s}
+.sf:focus{border-color:var(--acc)}
+.sf.kg{color:var(--muted);font-family:var(--FM);font-size:0.62rem;width:44px}
+.sf.kg:focus{color:var(--acc)}
+.sf-sep{font-family:var(--FM);font-size:0.52rem;color:var(--muted2)}
+
+@media(max-width:600px){
+  .hdr,.pool,.builder,.sess-bar,.visione-bar,.map-row{padding-left:13px;padding-right:13px}
+  .map-row{flex-direction:column}
+  .map-wrap{width:120px}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">SCHEDA<span>.</span>BUILD</div>
+  <input class="scheda-name" id="scheda-name" placeholder="Nome scheda..." maxlength="40"/>
+  <div class="hdr-right">
+    <span class="sess-count" id="sess-count">0 sessioni</span>
+    <div class="mode-toggle">
+      <button class="mode-btn on" id="mode-build" onclick="setMode('build',this)">BUILD</button>
+      <button class="mode-btn"    id="mode-total" onclick="setMode('total',this)">SCHEDA</button>
+    </div>
+    <button class="btn-save" id="btn-save" onclick="saveScheda()" disabled>SALVA</button>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="map-row">
+  <div class="map-wrap"><div id="map-single"></div></div>
+  <div class="map-controls">
+    <div class="map-title" id="map-title">Heatmap volume</div>
+    <div class="ctrl-group">
+      <div class="ctrl-lbl">Vista</div>
+      <div class="btn-row">
+        <button class="mini-btn on" id="v-front" onclick="toggleBodyView('FRONT',this)">FRONT</button>
+        <button class="mini-btn"    id="v-back"  onclick="toggleBodyView('BACK',this)">BACK</button>
+      </div>
+    </div>
+    <div class="ctrl-group">
+      <div class="ctrl-lbl">Visualizzazione</div>
+      <div class="btn-row">
+        <button class="mini-btn on" id="viz-vol"  onclick="setViz('volume',this)">Volume</button>
+        <button class="mini-btn"    id="viz-stim" onclick="setViz('stimolo',this)">Stimolo</button>
+      </div>
+    </div>
+    <div class="stim-legend" id="stim-legend" style="display:none">
+      <div class="stim-dot"><div class="stim-pip" style="background:var(--forza)"></div>Forza</div>
+      <div class="stim-dot"><div class="stim-pip" style="background:var(--iper)"></div>Ipertrofia</div>
+      <div class="stim-dot"><div class="stim-pip" style="background:var(--pot)"></div>Potenza</div>
+      <div class="stim-dot"><div class="stim-pip" style="background:var(--res)"></div>Resistenza</div>
+    </div>
+  </div>
+</div>
+
+<!-- VISIONE -->
+<div class="visione-bar">
+  <span class="vis-lbl">Visione</span>
+  <div class="vis-chips">
+    <button class="vis-chip" data-vis="attuale"   onclick="setVisione('attuale',this)">Sessione attuale</button>
+    <button class="vis-chip on" data-vis="totale" onclick="setVisione('totale',this)">Totale scheda</button>
+    <button class="vis-chip" data-vis="specifica" onclick="setVisione('specifica',this)">Specifica</button>
+  </div>
+  <div class="vis-sess-chips" id="vis-sess-chips" style="display:none"></div>
+  <span class="vis-badge" id="vis-badge" style="display:none">In costruzione</span>
+</div>
+
+<!-- SESSIONI -->
+<div class="sess-bar" id="sess-bar">
+  <span class="sess-bar-lbl">Scheda</span>
+  <span class="sess-empty" id="sess-empty">Nessuna sessione aggiunta</span>
+</div>
+
+<!-- BUILDER -->
+<div class="builder" id="builder-section">
+  <div class="builder-title">Nuova sessione</div>
+  <div class="brow">
+    <span class="brow-lbl">Stimolo</span>
+    <div class="btn-row">
+      <button class="mini-btn" data-stim="forza" onclick="setStim('forza',this)">Forza</button>
+      <button class="mini-btn" data-stim="iper"  onclick="setStim('iper',this)">Ipertrofia</button>
+      <button class="mini-btn" data-stim="pot"   onclick="setStim('pot',this)">Potenza</button>
+      <button class="mini-btn" data-stim="res"   onclick="setStim('res',this)">Resistenza</button>
+    </div>
+  </div>
+  <div class="brow">
+    <span class="brow-lbl">Durata</span>
+    <div class="btn-row">
+      <button class="mini-btn" data-dur="30"  onclick="setDur('30',this)">30'</button>
+      <button class="mini-btn" data-dur="45"  onclick="setDur('45',this)">45'</button>
+      <button class="mini-btn" data-dur="60"  onclick="setDur('60',this)">60'</button>
+      <button class="mini-btn" data-dur="90"  onclick="setDur('90',this)">90'</button>
+      <button class="mini-btn" data-dur="120" onclick="setDur('120',this)">120'</button>
+    </div>
+  </div>
+  <div class="limit-bar" id="limit-bar">
+    <div class="limit-dots" id="limit-dots"></div>
+    <span class="limit-txt" id="limit-txt"></span>
+  </div>
+  <div class="sel-row" id="sel-row">
+    <span class="sel-empty" id="sel-empty">nessun esercizio selezionato</span>
+  </div>
+  <div class="confirm-panel" id="confirm-panel">
+    <div class="confirm-title">Conferma serie × reps @ peso (opzionale)</div>
+    <div class="confirm-list" id="confirm-list"></div>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="cancelConfirm()">ANNULLA</button>
+      <button class="btn-add" id="btn-add" onclick="addSession()">+ AGGIUNGI ALLA SCHEDA</button>
+    </div>
+  </div>
+  <div class="confirm-trigger-row" id="confirm-trigger-row">
+    <button class="btn-add" id="btn-confirm" onclick="showConfirm()" disabled style="opacity:0.4">CONFERMA SESSIONE →</button>
+  </div>
+</div>
+
+<!-- SCHEDA VIEW -->
+<div class="scheda-view" id="scheda-view"></div>
+
+<!-- POOL -->
+<div class="pool" id="pool-section">
+  <div class="pool-hdr">
+    <div class="pool-title">Esercizi</div>
+    <div class="pool-tabs">
+      <button class="ptab on" data-tab="consigliati" onclick="setTab('consigliati',this)">Consigliati</button>
+      <button class="ptab"    data-tab="tutti"       onclick="setTab('tutti',this)">Tutti</button>
+      <button class="ptab"    data-tab="mancanti"    onclick="setTab('mancanti',this)">Mancanti</button>
+    </div>
+  </div>
+  <div class="missing-alert" id="missing-alert"></div>
+  <div id="pool-grid"></div>
+</div>
+
+<script>
+const POOL = [{"id":"pull_up","nome":"Pull Up","cat":"trazione verticale","lv":"intermedio","muscoli":{"lats-upper-left":7.4,"lats-upper-right":7.4,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":7.4,"lats-lower-right":7.4,"biceps-left":5.9,"biceps-right":5.9,"traps-mid-left":2.6,"traps-mid-right":2.6,"traps-lower-left":2.6,"traps-lower-right":2.6,"chest-lower-left":1.8,"chest-lower-right":1.8}},{"id":"chin_up","nome":"Chin Up","cat":"trazione verticale","lv":"intermedio","muscoli":{"biceps-left":10.0,"biceps-right":10.0,"lats-upper-left":5.4,"lats-upper-right":5.4,"lats-mid-left":7.8,"lats-mid-right":7.8,"lats-lower-left":5.4,"lats-lower-right":5.4,"traps-mid-left":2.4,"traps-mid-right":2.4}},{"id":"scapular_pull_up","nome":"Scapular Pull Up","cat":"trazione verticale","lv":"base","muscoli":{"traps-lower-left":10.0,"traps-lower-right":10.0,"serratus-anterior-left":10.0,"serratus-anterior-right":10.0,"lats-mid-left":6.0,"lats-mid-right":6.0,"traps-mid-left":3.6,"traps-mid-right":3.6,"lats-upper-left":2.4,"lats-upper-right":2.4,"lats-lower-left":2.4,"lats-lower-right":2.4}},{"id":"australian_pull_up","nome":"Australian Pull Up","cat":"trazione orizzontale","lv":"base","muscoli":{"lats-mid-left":10.0,"lats-mid-right":10.0,"traps-mid-left":8.2,"traps-mid-right":8.2,"lats-upper-left":4.4,"lats-upper-right":4.4,"lats-lower-left":4.4,"lats-lower-right":4.4,"biceps-left":2.7,"biceps-right":2.7}},{"id":"archer_pull_up","nome":"Archer Pull Up","cat":"trazione verticale","lv":"avanzato","muscoli":{"lats-upper-left":6.8,"lats-upper-right":6.8,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":6.8,"lats-lower-right":6.8,"biceps-left":6.8,"biceps-right":6.8,"traps-mid-left":3.2,"traps-mid-right":3.2,"traps-lower-left":2.4,"traps-lower-right":2.4,"forearm-left":1.6,"forearm-right":1.6,"forearm-flexors-left":1.6,"forearm-flexors-right":1.6,"forearm-extensors-left":1.6,"forearm-extensors-right":1.6}},{"id":"false_grip_dead_hang","nome":"False Grip Dead Hang","cat":"trazione verticale","lv":"intermedio","muscoli":{"forearm-left":5.0,"forearm-right":5.0,"forearm-flexors-left":10.0,"forearm-flexors-right":10.0,"forearm-extensors-left":5.0,"forearm-extensors-right":5.0,"biceps-left":1.8,"biceps-right":1.8}},{"id":"push_up","nome":"Push Up","cat":"spinta orizzontale","lv":"base","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"chest-lower-left":10.0,"chest-lower-right":10.0,"shoulder-front-left":8.0,"shoulder-front-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"archer_push_up","nome":"Archer Push Up","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"chest-lower-left":10.0,"chest-lower-right":10.0,"shoulder-front-left":8.0,"shoulder-front-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"fake_planche_push_up","nome":"Fake Planche Push Up","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"dips","nome":"Dips","cat":"spinta verticale","lv":"intermedio","muscoli":{"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"shoulder-front-left":3.6,"shoulder-front-right":3.6,"chest-upper-left":2.4,"chest-upper-right":2.4,"traps-lower-left":1.8,"traps-lower-right":1.8}},{"id":"handstand_push_up","nome":"Handstand Push Up","cat":"spinta verticale","lv":"avanzato","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"shoulder-side-left":10.0,"shoulder-side-right":10.0,"deltoid-rear-left":10.0,"deltoid-rear-right":10.0,"triceps-long-left":8.0,"triceps-long-right":8.0,"triceps-lateral-left":8.0,"triceps-lateral-right":8.0,"traps-upper-left":3.6,"traps-upper-right":3.6,"chest-upper-left":2.4,"chest-upper-right":2.4,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"handstand","nome":"Handstand","cat":"isometria","lv":"avanzato","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"shoulder-side-left":10.0,"shoulder-side-right":10.0,"deltoid-rear-left":10.0,"deltoid-rear-right":10.0,"traps-upper-left":10.0,"traps-upper-right":10.0,"traps-mid-left":10.0,"traps-mid-right":10.0,"traps-lower-left":10.0,"traps-lower-right":10.0,"triceps-long-left":4.5,"triceps-long-right":4.5,"triceps-lateral-left":4.5,"triceps-lateral-right":4.5,"forearm-flexors-left":4.5,"forearm-flexors-right":4.5,"forearm-extensors-left":4.5,"forearm-extensors-right":4.5,"abs-upper-left":3.8,"abs-upper-right":3.8,"abs-lower-left":3.8,"abs-lower-right":3.8,"obliques-left":3.8,"obliques-right":3.8,"gluteus-maximus-left":1.5,"gluteus-maximus-right":1.5,"gluteus-medius-left":1.5,"gluteus-medius-right":1.5}},{"id":"planche","nome":"Planche","cat":"isometria","lv":"elite","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-lower-left":4.8,"traps-lower-right":4.8,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"planche_leans","nome":"Planche Leans","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":6.0,"chest-upper-right":6.0,"chest-lower-left":6.0,"chest-lower-right":6.0,"triceps-long-left":3.6,"triceps-long-right":3.6,"triceps-lateral-left":3.6,"triceps-lateral-right":3.6,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"front_lever","nome":"Front Lever","cat":"isometria","lv":"elite","muscoli":{"lats-upper-left":7.4,"lats-upper-right":7.4,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":7.4,"lats-lower-right":7.4,"traps-lower-left":5.9,"traps-lower-right":5.9,"biceps-left":2.6,"biceps-right":2.6,"traps-mid-left":2.6,"traps-mid-right":2.6,"abs-upper-left":2.2,"abs-upper-right":2.2,"abs-lower-left":2.2,"abs-lower-right":2.2,"obliques-left":2.2,"obliques-right":2.2}},{"id":"leg_raises","nome":"Leg Raises","cat":"isometria","lv":"intermedio","muscoli":{"hip-flexor-left":10.0,"hip-flexor-right":10.0,"abs-upper-left":8.0,"abs-upper-right":8.0,"abs-lower-left":8.0,"abs-lower-right":8.0,"obliques-left":3.6,"obliques-right":3.6,"quads-left":2.4,"quads-right":2.4,"forearm-left":1.8,"forearm-right":1.8,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"back_leg_raises","nome":"Back Leg Raises","cat":"isometria","lv":"intermedio","muscoli":{"gluteus-maximus-left":10.0,"gluteus-maximus-right":10.0,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"lower-back-erectors-left":8.0,"lower-back-erectors-right":8.0,"spine":8.0,"hamstrings-medial-left":4.8,"hamstrings-medial-right":4.8,"hamstrings-lateral-left":4.8,"hamstrings-lateral-right":4.8,"adductors-left":2.4,"adductors-right":2.4,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8,"forearm-left":1.8,"forearm-right":1.8,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"l_sit","nome":"L-Sit","cat":"isometria","lv":"intermedio","muscoli":{"hip-flexor-left":10.0,"hip-flexor-right":10.0,"abs-upper-left":10.0,"abs-upper-right":10.0,"abs-lower-left":10.0,"abs-lower-right":10.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"quads-left":3.6,"quads-right":3.6,"traps-lower-left":1.8,"traps-lower-right":1.8,"serratus-anterior-left":1.8,"serratus-anterior-right":1.8}},{"id":"v_sit","nome":"V-Sit","cat":"isometria","lv":"elite","muscoli":{"hip-flexor-left":10.0,"hip-flexor-right":10.0,"abs-upper-left":10.0,"abs-upper-right":10.0,"abs-lower-left":10.0,"abs-lower-right":10.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"quads-left":4.8,"quads-right":4.8,"traps-lower-left":2.4,"traps-lower-right":2.4,"serratus-anterior-left":2.4,"serratus-anterior-right":2.4}},{"id":"hollow_position","nome":"Hollow Position","cat":"isometria","lv":"base","muscoli":{"abs-upper-left":10.0,"abs-upper-right":10.0,"abs-lower-left":10.0,"abs-lower-right":10.0,"hip-flexor-left":8.0,"hip-flexor-right":8.0,"obliques-left":3.6,"obliques-right":3.6,"quads-left":2.4,"quads-right":2.4,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"plank","nome":"Plank","cat":"isometria","lv":"base","muscoli":{"abs-upper-left":10.0,"abs-upper-right":10.0,"abs-lower-left":10.0,"abs-lower-right":10.0,"obliques-left":5.6,"obliques-right":5.6,"shoulder-front-left":2.0,"shoulder-front-right":2.0}},{"id":"copenhagen_plank","nome":"Copenhagen Plank","cat":"isometria","lv":"intermedio","muscoli":{"adductors-left":7.8,"adductors-right":7.8,"obliques-left":10.0,"obliques-right":10.0,"abs-upper-left":3.7,"abs-upper-right":3.7,"abs-lower-left":3.7,"abs-lower-right":3.7,"gluteus-medius-left":4.7,"gluteus-medius-right":4.7}},{"id":"affondo_laterale","nome":"Affondo Laterale","cat":"gambe","lv":"base","muscoli":{"adductors-left":10.0,"adductors-right":10.0,"quads-left":8.0,"quads-right":8.0,"gluteus-maximus-left":4.8,"gluteus-maximus-right":4.8,"gluteus-medius-left":4.8,"gluteus-medius-right":4.8,"hamstrings-medial-left":3.6,"hamstrings-medial-right":3.6,"hamstrings-lateral-left":3.6,"hamstrings-lateral-right":3.6,"tibialis-anterior-left":1.8,"tibialis-anterior-right":1.8,"calves-soleus-left":1.8,"calves-soleus-right":1.8}},{"id":"natural_leg_curl","nome":"Natural Leg Curl","cat":"gambe","lv":"intermedio","muscoli":{"hamstrings-medial-left":5.0,"hamstrings-medial-right":5.0,"hamstrings-lateral-left":10.0,"hamstrings-lateral-right":10.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"reverse_nordic_curl","nome":"Reverse Nordic Curl","cat":"gambe","lv":"intermedio","muscoli":{"quads-left":10.0,"quads-right":10.0,"tibialis-anterior-left":6.0,"tibialis-anterior-right":6.0,"hip-flexor-left":3.6,"hip-flexor-right":3.6}},{"id":"pistol_squat","nome":"Pistol Squat","cat":"gambe","lv":"avanzato","muscoli":{"quads-left":10.0,"quads-right":10.0,"gluteus-maximus-left":8.0,"gluteus-maximus-right":8.0,"gluteus-medius-left":8.0,"gluteus-medius-right":8.0,"hamstrings-medial-left":3.6,"hamstrings-medial-right":3.6,"hamstrings-lateral-left":3.6,"hamstrings-lateral-right":3.6,"adductors-left":3.6,"adductors-right":3.6,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"tibialis-anterior-left":3.0,"tibialis-anterior-right":3.0,"calves-soleus-left":3.0,"calves-soleus-right":3.0}},{"id":"natural_leg_extension","nome":"Natural Leg Extension","cat":"gambe","lv":"intermedio","muscoli":{"quads-left":10.0,"quads-right":10.0}},{"id":"sumo_squat","nome":"Sumo Squat","cat":"gambe","lv":"base","muscoli":{"adductors-left":8.6,"adductors-right":8.6,"quads-left":8.6,"quads-right":8.6,"gluteus-maximus-left":6.9,"gluteus-maximus-right":6.9,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"hamstrings-medial-left":3.1,"hamstrings-medial-right":3.1,"hamstrings-lateral-left":3.1,"hamstrings-lateral-right":3.1,"lower-back-erectors-left":3.1,"lower-back-erectors-right":3.1,"spine":3.1,"abs-upper-left":2.1,"abs-upper-right":2.1,"abs-lower-left":2.1,"abs-lower-right":2.1,"obliques-left":2.1,"obliques-right":2.1,"tibialis-anterior-left":1.6,"tibialis-anterior-right":1.6,"calves-soleus-left":1.6,"calves-soleus-right":1.6}},{"id":"alzate_laterali","nome":"Alzate Laterali","cat":"spinta verticale","lv":"base","muscoli":{"shoulder-side-left":10.0,"shoulder-side-right":10.0,"traps-upper-left":3.6,"traps-upper-right":3.6,"deltoid-rear-left":4.8,"deltoid-rear-right":4.8,"shoulder-front-left":2.4,"shoulder-front-right":2.4}},{"id":"alzate_frontali","nome":"Alzate Frontali","cat":"spinta verticale","lv":"base","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":3.6,"chest-upper-right":3.6,"traps-upper-left":2.4,"traps-upper-right":2.4,"deltoid-rear-left":3.6,"deltoid-rear-right":3.6}},{"id":"high_pull","nome":"High Pull","cat":"trazione verticale","lv":"intermedio","muscoli":{"traps-upper-left":10.0,"traps-upper-right":10.0,"shoulder-side-left":8.0,"shoulder-side-right":8.0,"shoulder-front-left":6.0,"shoulder-front-right":6.0,"biceps-left":3.6,"biceps-right":3.6,"deltoid-rear-left":8.4,"deltoid-rear-right":8.4,"lats-mid-left":3.6,"lats-mid-right":3.6,"traps-mid-left":3.6,"traps-mid-right":3.6,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"lower-back-erectors-left":1.8,"lower-back-erectors-right":1.8,"spine":1.8,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"battle_rope","nome":"Battle Rope","cat":"atletica","lv":"base","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"traps-upper-left":8.0,"traps-upper-right":8.0,"forearm-left":10.0,"forearm-right":10.0,"forearm-flexors-left":10.0,"forearm-flexors-right":10.0,"forearm-extensors-left":10.0,"forearm-extensors-right":10.0,"biceps-left":4.8,"biceps-right":4.8,"triceps-long-left":3.6,"triceps-long-right":3.6,"triceps-lateral-left":3.6,"triceps-lateral-right":3.6,"obliques-left":7.8,"obliques-right":7.8,"lats-upper-left":3.6,"lats-upper-right":3.6,"lats-mid-left":3.6,"lats-mid-right":3.6,"lats-lower-left":3.6,"lats-lower-right":3.6,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"quads-left":1.8,"quads-right":1.8,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"corsa","nome":"Corsa","cat":"atletica","lv":"base","muscoli":{"quads-left":10.0,"quads-right":10.0,"hamstrings-medial-left":10.0,"hamstrings-medial-right":10.0,"hamstrings-lateral-left":10.0,"hamstrings-lateral-right":10.0,"gluteus-maximus-left":8.0,"gluteus-maximus-right":8.0,"gluteus-medius-left":8.0,"gluteus-medius-right":8.0,"calves-gastroc-medial-left":6.6,"calves-gastroc-medial-right":6.6,"calves-gastroc-lateral-left":4.8,"calves-gastroc-lateral-right":4.8,"calves-soleus-left":6.6,"calves-soleus-right":6.6,"tibialis-anterior-left":5.4,"tibialis-anterior-right":5.4,"hip-flexor-left":4.8,"hip-flexor-right":4.8,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"shadow_boxing","nome":"Shadow Boxing","cat":"combat","lv":"base","muscoli":{"shoulder-front-left":7.3,"shoulder-front-right":7.3,"triceps-long-left":7.3,"triceps-long-right":7.3,"triceps-lateral-left":7.3,"triceps-lateral-right":7.3,"obliques-left":10.0,"obliques-right":10.0,"chest-upper-left":3.3,"chest-upper-right":3.3,"chest-lower-left":3.3,"chest-lower-right":3.3,"quads-left":3.3,"quads-right":3.3,"hip-flexor-left":3.3,"hip-flexor-right":3.3,"abs-upper-left":2.7,"abs-upper-right":2.7,"abs-lower-left":2.7,"abs-lower-right":2.7,"tibialis-anterior-left":1.6,"tibialis-anterior-right":1.6,"calves-soleus-left":1.6,"calves-soleus-right":1.6}},{"id":"lavoro_sacco","nome":"Lavoro al Sacco","cat":"combat","lv":"intermedio","muscoli":{"shoulder-front-left":7.7,"shoulder-front-right":7.7,"triceps-long-left":7.7,"triceps-long-right":7.7,"triceps-lateral-left":7.7,"triceps-lateral-right":7.7,"obliques-left":10.0,"obliques-right":10.0,"chest-upper-left":3.7,"chest-upper-right":3.7,"chest-lower-left":3.7,"chest-lower-right":3.7,"quads-left":3.7,"quads-right":3.7,"forearm-left":3.7,"forearm-right":3.7,"forearm-flexors-left":7.4,"forearm-flexors-right":7.4,"forearm-extensors-left":3.7,"forearm-extensors-right":3.7,"abs-upper-left":2.3,"abs-upper-right":2.3,"abs-lower-left":2.3,"abs-lower-right":2.3,"tibialis-anterior-left":1.8,"tibialis-anterior-right":1.8,"calves-soleus-left":1.8,"calves-soleus-right":1.8}},{"id":"footwork","nome":"Footwork","cat":"combat","lv":"base","muscoli":{"calves-gastroc-medial-left":10.0,"calves-gastroc-medial-right":10.0,"calves-gastroc-lateral-left":6.9,"calves-gastroc-lateral-right":6.9,"calves-soleus-left":9.5,"calves-soleus-right":9.5,"quads-left":5.2,"quads-right":5.2,"tibialis-anterior-left":5.7,"tibialis-anterior-right":5.7,"hip-flexor-left":4.7,"hip-flexor-right":4.7,"abs-upper-left":1.6,"abs-upper-right":1.6,"abs-lower-left":1.6,"abs-lower-right":1.6,"obliques-left":1.6,"obliques-right":1.6,"gluteus-medius-left":3.1,"gluteus-medius-right":3.1}},{"id":"sparring","nome":"Sparring","cat":"combat","lv":"avanzato","muscoli":{"shoulder-front-left":7.7,"shoulder-front-right":7.7,"obliques-left":10.0,"obliques-right":10.0,"quads-left":6.2,"quads-right":6.2,"triceps-long-left":3.7,"triceps-long-right":3.7,"triceps-lateral-left":3.7,"triceps-lateral-right":3.7,"hamstrings-medial-left":3.7,"hamstrings-medial-right":3.7,"hamstrings-lateral-left":3.7,"hamstrings-lateral-right":3.7,"calves-gastroc-medial-left":3.7,"calves-gastroc-medial-right":3.7,"calves-gastroc-lateral-left":3.7,"calves-gastroc-lateral-right":3.7,"neck-left":6.5,"neck-right":6.5,"abs-upper-left":2.3,"abs-upper-right":2.3,"abs-lower-left":2.3,"abs-lower-right":2.3,"tibialis-anterior-left":1.8,"tibialis-anterior-right":1.8,"calves-soleus-left":1.8,"calves-soleus-right":1.8,"gluteus-medius-left":2.8,"gluteus-medius-right":2.8}},{"id":"bird_dog","nome":"Bird-Dog","cat":"isometria","lv":"base","muscoli":{"lower-back-erectors-left":10.0,"lower-back-erectors-right":10.0,"lower-back-ql-left":5.9,"lower-back-ql-right":5.9,"gluteus-maximus-left":3.5,"gluteus-maximus-right":3.5,"gluteus-medius-left":3.5,"gluteus-medius-right":3.5,"spine":2.6,"shoulder-front-left":2.6,"shoulder-front-right":2.6,"shoulder-side-left":2.6,"shoulder-side-right":2.6,"deltoid-rear-left":2.6,"deltoid-rear-right":2.6,"abs-upper-left":2.2,"abs-upper-right":2.2,"abs-lower-left":4.0,"abs-lower-right":4.0,"obliques-left":2.2,"obliques-right":2.2}},{"id":"dead_bug","nome":"Dead Bug","cat":"isometria","lv":"base","muscoli":{"abs-lower-left":10.0,"abs-lower-right":10.0,"lower-back-erectors-left":3.8,"lower-back-erectors-right":3.8,"abs-upper-left":5.2,"abs-upper-right":5.2,"hip-flexor-left":1.7,"hip-flexor-right":1.7,"lower-back-ql-left":1.7,"lower-back-ql-right":1.7,"shoulder-front-left":1.7,"shoulder-front-right":1.7,"obliques-left":2.3,"obliques-right":2.3}},{"id":"vacuum_addominale","nome":"Vacuum Addominale","cat":"isometria","lv":"base","muscoli":{"abs-lower-left":10.0,"abs-lower-right":10.0,"obliques-left":2.4,"obliques-right":2.4}},{"id":"cheat_planche","nome":"Cheat Planche","cat":"isometria","lv":"avanzato","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"chest-upper-left":3.6,"chest-upper-right":3.6,"chest-lower-left":3.6,"chest-lower-right":3.6,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"advanced_tuck_planche","nome":"Advanced Tuck Planche","cat":"isometria","lv":"avanzato","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-lower-left":4.8,"traps-lower-right":4.8,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"hip-flexor-left":1.8,"hip-flexor-right":1.8}},{"id":"straddle_planche","nome":"Straddle Planche","cat":"isometria","lv":"elite","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-lower-left":4.8,"traps-lower-right":4.8,"adductors-left":3.6,"adductors-right":3.6,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"gluteus-maximus-left":2.4,"gluteus-maximus-right":2.4,"gluteus-medius-left":2.4,"gluteus-medius-right":2.4}},{"id":"plank_dita","nome":"Plank sulle Dita","cat":"isometria","lv":"intermedio","muscoli":{"forearm-flexors-left":10.0,"forearm-flexors-right":10.0,"forearm-left":5.0,"forearm-right":5.0,"forearm-extensors-left":5.0,"forearm-extensors-right":5.0,"abs-upper-left":3.6,"abs-upper-right":3.6,"abs-lower-left":3.6,"abs-lower-right":3.6,"obliques-left":1.8,"obliques-right":1.8}},{"id":"back_lever","nome":"Back Lever","cat":"isometria","lv":"avanzato","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"chest-lower-left":10.0,"chest-lower-right":10.0,"biceps-left":8.0,"biceps-right":8.0,"shoulder-front-left":4.8,"shoulder-front-right":4.8,"lats-upper-left":3.6,"lats-upper-right":3.6,"lats-mid-left":3.6,"lats-mid-right":3.6,"lats-lower-left":3.6,"lats-lower-right":3.6,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8}},{"id":"tuck_row","nome":"Tuck Row","cat":"trazione verticale","lv":"avanzato","muscoli":{"lats-upper-left":6.8,"lats-upper-right":6.8,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":6.8,"lats-lower-right":6.8,"biceps-left":5.4,"biceps-right":5.4,"traps-lower-left":3.2,"traps-lower-right":3.2,"traps-mid-left":3.2,"traps-mid-right":3.2,"abs-upper-left":2.0,"abs-upper-right":2.0,"abs-lower-left":2.0,"abs-lower-right":2.0,"obliques-left":2.0,"obliques-right":2.0,"hip-flexor-left":1.6,"hip-flexor-right":1.6}},{"id":"superman_hold","nome":"Superman Hold","cat":"isometria","lv":"base","muscoli":{"lower-back-erectors-left":10.0,"lower-back-erectors-right":10.0,"spine":8.1,"gluteus-maximus-left":8.1,"gluteus-maximus-right":8.1,"gluteus-medius-left":8.1,"gluteus-medius-right":8.1,"hamstrings-medial-left":3.9,"hamstrings-medial-right":3.9,"hamstrings-lateral-left":3.9,"hamstrings-lateral-right":3.9,"traps-upper-left":2.9,"traps-upper-right":2.9,"traps-mid-left":5.8,"traps-mid-right":5.8,"traps-lower-left":2.9,"traps-lower-right":2.9,"lats-mid-left":2.9,"lats-mid-right":2.9,"lower-back-ql-left":1.9,"lower-back-ql-right":1.9}},{"id":"tuck_planche","nome":"Tuck Planche","cat":"isometria","lv":"avanzato","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-lower-left":4.8,"traps-lower-right":4.8,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"hip-flexor-left":1.8,"hip-flexor-right":1.8}},{"id":"tuck_front_lever","nome":"Tuck Front Lever","cat":"isometria","lv":"avanzato","muscoli":{"lats-upper-left":7.4,"lats-upper-right":7.4,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":7.4,"lats-lower-right":7.4,"traps-lower-left":5.9,"traps-lower-right":5.9,"biceps-left":2.6,"biceps-right":2.6,"traps-mid-left":2.6,"traps-mid-right":2.6,"abs-upper-left":2.2,"abs-upper-right":2.2,"abs-lower-left":2.2,"abs-lower-right":2.2,"obliques-left":2.2,"obliques-right":2.2}},{"id":"diamond_push_up","nome":"Diamond Push Up","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"shoulder-front-left":8.0,"shoulder-front-right":8.0,"chest-upper-left":3.6,"chest-upper-right":3.6,"chest-lower-left":3.6,"chest-lower-right":3.6,"serratus-anterior-left":2.4,"serratus-anterior-right":2.4,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"push_up_piedi_rialzati","nome":"Push Up Piedi Rialzati","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"shoulder-front-left":7.4,"shoulder-front-right":7.4,"triceps-long-left":3.5,"triceps-long-right":3.5,"triceps-lateral-left":3.5,"triceps-lateral-right":3.5,"chest-lower-left":2.6,"chest-lower-right":2.6}},{"id":"push_up_larghi","nome":"Push Up Larghi","cat":"spinta orizzontale","lv":"base","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"chest-lower-left":10.0,"chest-lower-right":10.0,"shoulder-front-left":6.0,"shoulder-front-right":6.0,"triceps-long-left":3.6,"triceps-long-right":3.6,"triceps-lateral-left":3.6,"triceps-lateral-right":3.6,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"one_arm_push_up","nome":"One Arm Push Up","cat":"spinta orizzontale","lv":"elite","muscoli":{"chest-upper-left":10.0,"chest-upper-right":10.0,"chest-lower-left":10.0,"chest-lower-right":10.0,"shoulder-front-left":10.0,"shoulder-front-right":10.0,"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"obliques-left":7.8,"obliques-right":7.8,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8,"gluteus-medius-left":1.8,"gluteus-medius-right":1.8,"forearm-flexors-left":2.4,"forearm-flexors-right":2.4,"forearm-extensors-left":2.4,"forearm-extensors-right":2.4}},{"id":"pike_push_up","nome":"Pike Push Up","cat":"spinta verticale","lv":"intermedio","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"shoulder-side-left":6.0,"shoulder-side-right":6.0,"triceps-long-left":4.8,"triceps-long-right":4.8,"triceps-lateral-left":4.8,"triceps-lateral-right":4.8,"traps-upper-left":3.6,"traps-upper-right":3.6,"chest-upper-left":2.4,"chest-upper-right":2.4,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}},{"id":"muscle_up","nome":"Muscle Up","cat":"trazione verticale","lv":"avanzato","muscoli":{"lats-upper-left":10.0,"lats-upper-right":10.0,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":10.0,"lats-lower-right":10.0,"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"biceps-left":8.0,"biceps-right":8.0,"chest-upper-left":3.6,"chest-upper-right":3.6,"chest-lower-left":3.6,"chest-lower-right":3.6,"shoulder-front-left":3.6,"shoulder-front-right":3.6,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"forearm-left":2.4,"forearm-right":2.4,"forearm-flexors-left":2.4,"forearm-flexors-right":2.4,"forearm-extensors-left":2.4,"forearm-extensors-right":2.4}},{"id":"clap_push_up","nome":"Clap Push Up","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"chest-upper-left":8.0,"chest-upper-right":8.0,"chest-lower-left":8.0,"chest-lower-right":8.0,"triceps-long-left":10.0,"triceps-long-right":10.0,"triceps-lateral-left":10.0,"triceps-lateral-right":10.0,"shoulder-front-left":8.0,"shoulder-front-right":8.0,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8}},{"id":"single_leg_box_jump","nome":"Single Leg Jump su Box","cat":"gambe","lv":"intermedio","muscoli":{"quads-left":7.7,"quads-right":7.7,"gluteus-maximus-left":7.7,"gluteus-maximus-right":7.7,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"calves-gastroc-medial-left":7.5,"calves-gastroc-medial-right":7.5,"calves-gastroc-lateral-left":6.2,"calves-gastroc-lateral-right":6.2,"hamstrings-medial-left":2.8,"hamstrings-medial-right":2.8,"hamstrings-lateral-left":2.8,"hamstrings-lateral-right":2.8,"calves-soleus-left":5.1,"calves-soleus-right":5.1,"hip-flexor-left":3.7,"hip-flexor-right":3.7,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8,"tibialis-anterior-left":2.3,"tibialis-anterior-right":2.3}},{"id":"affondo_warrior","nome":"Affondo Warrior","cat":"gambe","lv":"base","muscoli":{"quads-left":9.1,"quads-right":9.1,"gluteus-maximus-left":7.3,"gluteus-maximus-right":7.3,"gluteus-medius-left":8.9,"gluteus-medius-right":8.9,"obliques-left":10.0,"obliques-right":10.0,"hamstrings-medial-left":3.3,"hamstrings-medial-right":3.3,"hamstrings-lateral-left":3.3,"hamstrings-lateral-right":3.3,"adductors-left":3.3,"adductors-right":3.3,"lower-back-erectors-left":3.3,"lower-back-erectors-right":3.3,"spine":3.3,"abs-upper-left":2.7,"abs-upper-right":2.7,"abs-lower-left":2.7,"abs-lower-right":2.7,"tibialis-anterior-left":1.6,"tibialis-anterior-right":1.6,"calves-soleus-left":1.6,"calves-soleus-right":1.6}},{"id":"calcio_frontale","nome":"Calcio Frontale","cat":"combat","lv":"base","muscoli":{"quads-left":10.0,"quads-right":10.0,"hip-flexor-left":10.0,"hip-flexor-right":10.0,"gluteus-maximus-left":3.6,"gluteus-maximus-right":3.6,"gluteus-medius-left":6.0,"gluteus-medius-right":6.0,"tibialis-anterior-left":6.0,"tibialis-anterior-right":6.0,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"calves-soleus-left":2.4,"calves-soleus-right":2.4}},{"id":"calcio_laterale","nome":"Calcio Laterale","cat":"combat","lv":"intermedio","muscoli":{"quads-left":4.3,"quads-right":4.3,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"gluteus-maximus-left":1.5,"gluteus-maximus-right":1.5,"hip-flexor-left":1.5,"hip-flexor-right":1.5,"tibialis-anterior-left":2.6,"tibialis-anterior-right":2.6}},{"id":"calcio_circolare","nome":"Calcio Circolare","cat":"combat","lv":"base","muscoli":{"quads-left":9.1,"quads-right":9.1,"hip-flexor-left":8.9,"hip-flexor-right":8.9,"obliques-left":10.0,"obliques-right":10.0,"gluteus-maximus-left":4.4,"gluteus-maximus-right":4.4,"gluteus-medius-left":8.2,"gluteus-medius-right":8.2,"adductors-left":3.3,"adductors-right":3.3,"calves-gastroc-medial-left":3.3,"calves-gastroc-medial-right":3.3,"calves-gastroc-lateral-left":3.3,"calves-gastroc-lateral-right":3.3,"abs-upper-left":2.7,"abs-upper-right":2.7,"abs-lower-left":2.7,"abs-lower-right":2.7,"tibialis-anterior-left":2.2,"tibialis-anterior-right":2.2,"calves-soleus-left":2.2,"calves-soleus-right":2.2}},{"id":"ginocchiata_frontale","nome":"Ginocchiata Frontale","cat":"combat","lv":"base","muscoli":{"hip-flexor-left":10.0,"hip-flexor-right":10.0,"quads-left":8.0,"quads-right":8.0,"gluteus-maximus-left":3.6,"gluteus-maximus-right":3.6,"gluteus-medius-left":6.0,"gluteus-medius-right":6.0,"abs-upper-left":6.6,"abs-upper-right":6.6,"abs-lower-left":6.6,"abs-lower-right":6.6,"obliques-left":3.0,"obliques-right":3.0,"tibialis-anterior-left":1.8,"tibialis-anterior-right":1.8,"calves-soleus-left":1.8,"calves-soleus-right":1.8}},{"id":"ginocchiata_laterale","nome":"Ginocchiata Laterale","cat":"combat","lv":"intermedio","muscoli":{"hip-flexor-left":4.0,"hip-flexor-right":4.0,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"quads-left":1.8,"quads-right":1.8,"obliques-left":3.9,"obliques-right":3.9,"abs-upper-left":1.5,"abs-upper-right":1.5,"abs-lower-left":1.5,"abs-lower-right":1.5}},{"id":"heel_kick","nome":"Heel Kick","cat":"combat","lv":"intermedio","muscoli":{"gluteus-maximus-left":8.5,"gluteus-maximus-right":8.5,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"hamstrings-medial-left":8.5,"hamstrings-medial-right":8.5,"hamstrings-lateral-left":8.5,"hamstrings-lateral-right":8.5,"lower-back-erectors-left":3.1,"lower-back-erectors-right":3.1,"spine":3.1,"quads-left":3.1,"quads-right":3.1,"abs-upper-left":2.5,"abs-upper-right":2.5,"abs-lower-left":2.5,"abs-lower-right":2.5,"obliques-left":2.5,"obliques-right":2.5,"tibialis-anterior-left":2.0,"tibialis-anterior-right":2.0,"calves-soleus-left":2.0,"calves-soleus-right":2.0}},{"id":"axe_kick","nome":"Axe Kick","cat":"combat","lv":"intermedio","muscoli":{"hamstrings-medial-left":10.0,"hamstrings-medial-right":10.0,"hamstrings-lateral-left":10.0,"hamstrings-lateral-right":10.0,"hip-flexor-left":10.0,"hip-flexor-right":10.0,"quads-left":3.6,"quads-right":3.6,"adductors-left":3.6,"adductors-right":3.6,"gluteus-maximus-left":3.6,"gluteus-maximus-right":3.6,"gluteus-medius-left":6.0,"gluteus-medius-right":6.0,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"tibialis-anterior-left":2.4,"tibialis-anterior-right":2.4,"calves-soleus-left":2.4,"calves-soleus-right":2.4}},{"id":"step_in_step_out","nome":"Step In / Step Out","cat":"combat","lv":"base","muscoli":{"calves-gastroc-medial-left":10.0,"calves-gastroc-medial-right":10.0,"calves-gastroc-lateral-left":10.0,"calves-gastroc-lateral-right":10.0,"quads-left":7.5,"quads-right":7.5,"calves-soleus-left":8.2,"calves-soleus-right":8.2,"hip-flexor-left":4.5,"hip-flexor-right":4.5,"tibialis-anterior-left":3.8,"tibialis-anterior-right":3.8,"abs-upper-left":2.2,"abs-upper-right":2.2,"abs-lower-left":2.2,"abs-lower-right":2.2,"obliques-left":2.2,"obliques-right":2.2,"gluteus-medius-left":2.2,"gluteus-medius-right":2.2}},{"id":"side_step","nome":"Side Step","cat":"combat","lv":"base","muscoli":{"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"adductors-left":5.5,"adductors-right":5.5,"calves-gastroc-medial-left":4.1,"calves-gastroc-medial-right":4.1,"calves-gastroc-lateral-left":4.1,"calves-gastroc-lateral-right":4.1,"quads-left":2.5,"quads-right":2.5,"tibialis-anterior-left":2.1,"tibialis-anterior-right":2.1,"calves-soleus-left":2.1,"calves-soleus-right":2.1}},{"id":"shuffle","nome":"Shuffle","cat":"combat","lv":"base","muscoli":{"calves-gastroc-medial-left":9.1,"calves-gastroc-medial-right":9.1,"calves-gastroc-lateral-left":9.1,"calves-gastroc-lateral-right":9.1,"calves-soleus-left":10.0,"calves-soleus-right":10.0,"quads-left":3.3,"quads-right":3.3,"hip-flexor-left":3.3,"hip-flexor-right":3.3,"tibialis-anterior-left":2.7,"tibialis-anterior-right":2.7,"abs-upper-left":1.6,"abs-upper-right":1.6,"abs-lower-left":1.6,"abs-lower-right":1.6,"obliques-left":1.6,"obliques-right":1.6,"gluteus-medius-left":1.6,"gluteus-medius-right":1.6}},{"id":"nuoto_stile_libero","nome":"Nuoto Stile Libero","cat":"atletica","lv":"base","muscoli":{"lats-upper-left":10.0,"lats-upper-right":10.0,"lats-mid-left":6.8,"lats-mid-right":6.8,"lats-lower-left":6.8,"lats-lower-right":6.8,"shoulder-front-left":5.4,"shoulder-front-right":5.4,"chest-upper-left":5.4,"chest-upper-right":5.4,"chest-lower-left":5.4,"chest-lower-right":5.4,"triceps-long-left":3.2,"triceps-long-right":3.2,"triceps-lateral-left":3.2,"triceps-lateral-right":3.2,"deltoid-rear-left":8.1,"deltoid-rear-right":8.1,"traps-upper-left":2.4,"traps-upper-right":2.4,"traps-mid-left":2.4,"traps-mid-right":2.4,"traps-lower-left":2.4,"traps-lower-right":2.4,"biceps-left":2.4,"biceps-right":2.4,"abs-upper-left":1.6,"abs-upper-right":1.6,"abs-lower-left":1.6,"abs-lower-right":1.6,"obliques-left":1.6,"obliques-right":1.6}},{"id":"nuoto_dorso","nome":"Nuoto Dorso","cat":"atletica","lv":"base","muscoli":{"lats-upper-left":5.6,"lats-upper-right":5.6,"lats-mid-left":10.0,"lats-mid-right":10.0,"lats-lower-left":5.6,"lats-lower-right":5.6,"traps-lower-left":4.4,"traps-lower-right":4.4,"traps-mid-left":4.4,"traps-mid-right":4.4,"deltoid-rear-left":5.3,"deltoid-rear-right":5.3,"shoulder-front-left":2.0,"shoulder-front-right":2.0,"biceps-left":2.0,"biceps-right":2.0,"triceps-long-left":2.0,"triceps-long-right":2.0,"triceps-lateral-left":2.0,"triceps-lateral-right":2.0}},{"id":"horse_stance","nome":"Horse Stance","cat":"gambe","lv":"base","muscoli":{"quads-left":8.6,"quads-right":8.6,"gluteus-maximus-left":6.9,"gluteus-maximus-right":6.9,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"adductors-left":6.9,"adductors-right":6.9,"hamstrings-medial-left":3.1,"hamstrings-medial-right":3.1,"hamstrings-lateral-left":3.1,"hamstrings-lateral-right":3.1,"abs-upper-left":1.6,"abs-upper-right":1.6,"abs-lower-left":1.6,"abs-lower-right":1.6,"obliques-left":1.6,"obliques-right":1.6,"tibialis-anterior-left":2.1,"tibialis-anterior-right":2.1,"calves-soleus-left":2.1,"calves-soleus-right":2.1}},{"id":"long_jump","nome":"Long Jump","cat":"atletica","lv":"base","muscoli":{"quads-left":10.0,"quads-right":10.0,"gluteus-maximus-left":10.0,"gluteus-maximus-right":10.0,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"calves-gastroc-medial-left":8.0,"calves-gastroc-medial-right":8.0,"calves-gastroc-lateral-left":8.0,"calves-gastroc-lateral-right":8.0,"hamstrings-medial-left":3.6,"hamstrings-medial-right":3.6,"hamstrings-lateral-left":3.6,"hamstrings-lateral-right":3.6,"calves-soleus-left":6.0,"calves-soleus-right":6.0,"hip-flexor-left":4.8,"hip-flexor-right":4.8,"abs-upper-left":2.4,"abs-upper-right":2.4,"abs-lower-left":2.4,"abs-lower-right":2.4,"obliques-left":2.4,"obliques-right":2.4,"tibialis-anterior-left":2.4,"tibialis-anterior-right":2.4}},{"id":"high_jump","nome":"High Jump","cat":"atletica","lv":"base","muscoli":{"quads-left":10.0,"quads-right":10.0,"gluteus-maximus-left":10.0,"gluteus-maximus-right":10.0,"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"calves-gastroc-medial-left":10.0,"calves-gastroc-medial-right":10.0,"calves-gastroc-lateral-left":10.0,"calves-gastroc-lateral-right":10.0,"hamstrings-medial-left":3.6,"hamstrings-medial-right":3.6,"hamstrings-lateral-left":3.6,"hamstrings-lateral-right":3.6,"calves-soleus-left":7.2,"calves-soleus-right":7.2,"hip-flexor-left":4.8,"hip-flexor-right":4.8,"abs-upper-left":1.8,"abs-upper-right":1.8,"abs-lower-left":1.8,"abs-lower-right":1.8,"obliques-left":1.8,"obliques-right":1.8,"tibialis-anterior-left":2.4,"tibialis-anterior-right":2.4}},{"id":"side_jump","nome":"Side Jump","cat":"atletica","lv":"intermedio","muscoli":{"gluteus-medius-left":10.0,"gluteus-medius-right":10.0,"quads-left":3.0,"quads-right":3.0,"gluteus-maximus-left":1.8,"gluteus-maximus-right":1.8}},{"id":"push_up_mani_avanzate","nome":"Push Up Mani Avanzate","cat":"spinta orizzontale","lv":"intermedio","muscoli":{"shoulder-front-left":10.0,"shoulder-front-right":10.0,"triceps-long-left":8.0,"triceps-long-right":8.0,"triceps-lateral-left":8.0,"triceps-lateral-right":8.0,"chest-upper-left":3.6,"chest-upper-right":3.6,"serratus-anterior-left":3.6,"serratus-anterior-right":3.6,"traps-lower-left":3.6,"traps-lower-right":3.6,"abs-upper-left":3.0,"abs-upper-right":3.0,"abs-lower-left":3.0,"abs-lower-right":3.0,"obliques-left":3.0,"obliques-right":3.0,"forearm-flexors-left":1.8,"forearm-flexors-right":1.8,"forearm-extensors-left":1.8,"forearm-extensors-right":1.8}}];
+
+const K_MATRIX = {
+  forza:{forza:1.0,iper:0.55,res:0.2,pot:0.75},
+  iper: {forza:0.6,iper:1.0, res:0.6,pot:0.4},
+  res:  {forza:0.2,iper:0.5, res:1.0,pot:0.1},
+  pot:  {forza:0.75,iper:0.4,res:0.1,pot:1.0},
+};
+const PARADIGMS = {
+  forza:{serieN:4,repsN:3, secRep:7.5,recSec:180,label:'4×3 — rec 3min'},
+  iper: {serieN:4,repsN:10,secRep:5.0,recSec:75, label:'4×10 — rec 75sec'},
+  pot:  {serieN:5,repsN:4, secRep:6.0,recSec:120,label:'5×4 — rec 2min'},
+  res:  {serieN:3,repsN:20,secRep:2.5,recSec:60, label:'3×20 — rec 1min'},
+};
+const WARMUP_MIN = 10;
+function minsPerEx(stim,lv){
+  const p=PARADIGMS[stim];if(!p)return 8;
+  const isAdv=lv==='avanzato'||lv==='elite';
+  const rec=isAdv?p.recSec*1.33:p.recSec;
+  return(p.serieN*p.repsN*p.secRep+(p.serieN-1)*rec)/60;
+}
+function maxEx(stim,dur){
+  return Math.max(1,Math.floor(((dur||60)-WARMUP_MIN)/minsPerEx(stim,'intermedio')));
+}
+const CC={forza:'var(--forza)',iper:'var(--iper)',pot:'var(--pot)',res:'var(--res)'};
+const CN={forza:'Forza',iper:'Ipertrofia',pot:'Potenza',res:'Resistenza'};
+const CAT_COLORS={'trazione verticale':'#3399ff','trazione orizzontale':'#2277cc','spinta orizzontale':'#ff3333','spinta verticale':'#cc2222','isometria':'#aa44ff','gambe':'#33cc66','atletica':'#ff8c00','combat':'#ff6644'};
+
+let chart=null,customColors=null;
+let bodyView='FRONT',vizMode='volume';
+let visione='totale',visioneSpecId=null;
+let appMode='build';
+let curStim=null,curDur=null,curSel=[];
+let scheda=[],sessCounter=0,poolTab='consigliati';
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const {BodyChart,ViewSide}=BodyMuscles;
+  chart=new BodyChart(document.getElementById('map-single'),{
+    view:ViewSide.FRONT,bodyState:{},showViewLabel:false,enableTransitions:true
+  });
+  const origRP=chart.refreshPath.bind(chart);
+  chart.refreshPath=function(id){
+    origRP(id);
+    if(customColors&&customColors.has(id)){
+      const p=this.musclePaths.get(id);
+      if(p){p.setAttribute('fill',customColors.get(id));p.style.fillOpacity='1';}
+    } else if(customColors){
+      const p=this.musclePaths.get(id);
+      if(p){p.setAttribute('fill','#1a2535');p.style.fillOpacity='0.35';}
+    }
+  };
+  renderPool();updateMaps();
+});
+
+function setMode(mode,btn){
+  appMode=mode;
+  document.getElementById('mode-build').classList.toggle('on',mode==='build');
+  document.getElementById('mode-total').classList.toggle('on',mode==='total');
+  document.getElementById('builder-section').style.display=mode==='build'?'':'none';
+  document.getElementById('pool-section').style.display=mode==='build'?'':'none';
+  document.getElementById('sess-bar').style.display=mode==='build'?'':'none';
+  const sv=document.getElementById('scheda-view');
+  if(mode==='total'){sv.classList.add('show');renderSchedaView();}
+  else sv.classList.remove('show');
+}
+
+function setStim(s,btn){
+  curStim=s;
+  document.querySelectorAll('[data-stim]').forEach(b=>b.className='mini-btn');
+  btn.classList.add('on-'+s);
+  refreshBtn();updateLimitBar();renderPool();renderSel();updateMaps();
+}
+function setDur(d,btn){
+  curDur=d;
+  document.querySelectorAll('[data-dur]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  refreshBtn();updateLimitBar();
+}
+function refreshBtn(){
+  const btn=document.getElementById('btn-confirm');
+  const ok=curStim&&curDur&&curSel.length>0;
+  btn.disabled=!ok;btn.style.opacity=ok?'1':'0.4';
+}
+function updateLimitBar(){
+  const bar=document.getElementById('limit-bar');
+  if(!curStim||!curDur){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  const max=maxEx(curStim,parseInt(curDur));
+  const n=curSel.length;
+  const dots=document.getElementById('limit-dots');
+  const txt=document.getElementById('limit-txt');
+  dots.innerHTML='';
+  for(let i=0;i<max;i++){
+    const d=document.createElement('div');
+    d.className='ldot'+(i<n?(n>=max?' full':n>=max*0.75?' warn':' used'):'');
+    dots.appendChild(d);
+  }
+  if(n>=max){txt.className='limit-txt full';txt.textContent=`Limite raggiunto (${n}/${max}) — ${PARADIGMS[curStim].label}`;}
+  else{txt.className='limit-txt'+(n>=max*0.75?' warn':'');txt.textContent=`${n}/${max} esercizi — ${PARADIGMS[curStim].label}`;}
+}
+
+function toggleEx(id){
+  if(!curStim){const t=document.querySelector('.builder-title');t.style.color='var(--forza)';setTimeout(()=>t.style.color='',500);return;}
+  const idx=curSel.findIndex(e=>e.id===id);
+  if(idx>=0){curSel.splice(idx,1);}
+  else{
+    if(curDur){const max=maxEx(curStim,parseInt(curDur));if(curSel.length>=max){flashLimit();return;}}
+    curSel.push({id,stim:curStim});
+  }
+  renderSel();renderPool();refreshBtn();updateLimitBar();updateMaps();
+}
+function flashLimit(){
+  const bar=document.getElementById('limit-bar');
+  bar.style.background='rgba(255,51,51,0.1)';setTimeout(()=>bar.style.background='',400);
+}
+function renderSel(){
+  const row=document.getElementById('sel-row');
+  const empty=document.getElementById('sel-empty');
+  row.querySelectorAll('.sel-pill').forEach(p=>p.remove());
+  if(!curSel.length){empty.style.display='inline';return;}
+  empty.style.display='none';
+  curSel.forEach(e=>{
+    const ex=POOL.find(x=>x.id===e.id);
+    const pill=document.createElement('div');
+    pill.className='sel-pill';
+    pill.style.background=CC[e.stim]+'22';
+    pill.style.border='1px solid '+CC[e.stim]+'55';
+    pill.style.color=CC[e.stim];
+    pill.innerHTML=ex.nome+' <span style="opacity:0.5;font-size:0.5rem">✕</span>';
+    pill.onclick=()=>toggleEx(e.id);
+    row.appendChild(pill);
+  });
+}
+function showConfirm(){
+  const panel=document.getElementById('confirm-panel');
+  const list=document.getElementById('confirm-list');
+  const p=PARADIGMS[curStim];
+  list.innerHTML='';
+  curSel.forEach(e=>{
+    const ex=POOL.find(x=>x.id===e.id);
+    const row=document.createElement('div');row.className='confirm-row';
+    row.innerHTML=`<div class="confirm-name" style="color:${CC[e.stim]}">${ex.nome}</div>
+      <input class="ci" type="number" min="1" max="20" value="${p.serieN}" data-id="${e.id}" data-f="serie"/>
+      <span class="csep">×</span>
+      <input class="ci" type="number" min="1" max="200" value="${p.repsN}" data-id="${e.id}" data-f="reps"/>
+      <span class="csep">@</span>
+      <input class="ci kg" type="number" min="0" max="500" step="0.5" placeholder="kg" data-id="${e.id}" data-f="peso"/>`;
+    list.appendChild(row);
+  });
+  panel.classList.add('show');
+  document.getElementById('confirm-trigger-row').style.display='none';
+}
+function cancelConfirm(){
+  document.getElementById('confirm-panel').classList.remove('show');
+  document.getElementById('confirm-trigger-row').style.display='flex';
+}
+function addSession(){
+  const list=document.getElementById('confirm-list');
+  const blocchi=curSel.map(e=>{
+    const si=list.querySelector(`[data-id="${e.id}"][data-f="serie"]`);
+    const ri=list.querySelector(`[data-id="${e.id}"][data-f="reps"]`);
+    const pi=list.querySelector(`[data-id="${e.id}"][data-f="peso"]`);
+    return{esercizio:e.id,stimolo:e.stim,serie:parseInt(si?.value)||PARADIGMS[curStim].serieN,reps:parseInt(ri?.value)||PARADIGMS[curStim].repsN,peso:parseFloat(pi?.value)||null};
+  });
+  sessCounter++;
+  scheda.push({id:'sess_'+sessCounter,nome:'Sessione '+sessCounter,stimolo:curStim,durata:curDur,blocchi});
+  curSel=[];curStim=null;curDur=null;
+  document.querySelectorAll('[data-stim]').forEach(b=>b.className='mini-btn');
+  document.querySelectorAll('[data-dur]').forEach(b=>b.classList.remove('on'));
+  document.getElementById('confirm-panel').classList.remove('show');
+  document.getElementById('confirm-trigger-row').style.display='flex';
+  document.getElementById('limit-bar').classList.remove('show');
+  renderSel();renderSessBar();renderPool();updateMaps();updateMissingAlert();
+  document.getElementById('btn-save').disabled=false;
+  document.getElementById('sess-count').textContent=scheda.length+' sessioni';
+  if(visione==='specifica')renderVisSessChips();
+}
+function renderSessBar(){
+  const bar=document.getElementById('sess-bar');
+  const empty=document.getElementById('sess-empty');
+  bar.querySelectorAll('.sess-chip').forEach(c=>c.remove());
+  empty.style.display=scheda.length?'none':'inline';
+  scheda.forEach(sess=>{
+    const chip=document.createElement('div');chip.className='sess-chip';
+    chip.innerHTML=`<div class="sess-chip-pip" style="background:${CC[sess.stimolo]}"></div><span class="sess-chip-name">${sess.nome}</span><span class="sess-chip-meta">${CN[sess.stimolo]}·${sess.durata}'·${sess.blocchi.length}es.</span><span class="sess-chip-del" onclick="delSession('${sess.id}')">✕</span>`;
+    bar.appendChild(chip);
+  });
+}
+function delSession(id){
+  scheda=scheda.filter(s=>s.id!==id);
+  renderSessBar();updateMaps();updateMissingAlert();
+  document.getElementById('btn-save').disabled=scheda.length===0;
+  document.getElementById('sess-count').textContent=scheda.length+' sessioni';
+  if(visione==='specifica')renderVisSessChips();
+  if(appMode==='total')renderSchedaView();
+}
+
+// VISIONE
+function setVisione(v,btn){
+  visione=v;
+  document.querySelectorAll('[data-vis]').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const chips=document.getElementById('vis-sess-chips');
+  const badge=document.getElementById('vis-badge');
+  if(v==='specifica'){chips.style.display='flex';badge.style.display='none';renderVisSessChips();}
+  else if(v==='attuale'){chips.style.display='none';badge.style.display='inline';}
+  else{chips.style.display='none';badge.style.display='none';}
+  updateMaps();
+}
+function renderVisSessChips(){
+  const c=document.getElementById('vis-sess-chips');c.innerHTML='';
+  if(!scheda.length){c.innerHTML='<span style="font-family:var(--FM);font-size:0.52rem;color:var(--muted2)">Nessuna sessione</span>';return;}
+  scheda.forEach(sess=>{
+    const chip=document.createElement('button');
+    chip.className='vis-sess-chip'+(visioneSpecId===sess.id?' on':'');
+    chip.innerHTML=`<div class="vis-pip" style="background:${CC[sess.stimolo]}"></div>${sess.nome}`;
+    chip.onclick=()=>{visioneSpecId=sess.id;renderVisSessChips();updateMaps();};
+    c.appendChild(chip);
+  });
+}
+function getActiveBlocchi(){
+  const fromSaved=()=>{
+    if(visione==='totale') return scheda.flatMap(s=>s.blocchi);
+    if(visione==='specifica') return scheda.find(s=>s.id===visioneSpecId)?.blocchi||[];
+    return [];
+  };
+  const saved=fromSaved();
+  const cur=curSel.map(e=>({esercizio:e.id,stimolo:e.stim||curStim||'iper',serie:PARADIGMS[e.stim||curStim||'iper'].serieN,reps:PARADIGMS[e.stim||curStim||'iper'].repsN}));
+  return[...saved,...cur];
+}
+
+// MAPS
+function toggleBodyView(side,btn){
+  bodyView=side;
+  document.getElementById('v-front').classList.toggle('on',side==='FRONT');
+  document.getElementById('v-back').classList.toggle('on',side==='BACK');
+  updateMaps();
+}
+function setViz(mode,btn){
+  vizMode=mode;
+  document.getElementById('viz-vol').classList.toggle('on',mode==='volume');
+  document.getElementById('viz-stim').classList.toggle('on',mode==='stimolo');
+  document.getElementById('stim-legend').style.display=mode==='stimolo'?'flex':'none';
+  updateMaps();
+}
+function updateMaps(){
+  if(!chart)return;
+  const{ViewSide}=BodyMuscles;
+  const blocchi=getActiveBlocchi();
+  chart.update({view:bodyView==='FRONT'?ViewSide.FRONT:ViewSide.BACK});
+  const titles={attuale:'Sessione in costruzione',totale:'Aggregato scheda',specifica:scheda.find(s=>s.id===visioneSpecId)?.nome||'Specifica'};
+  if(vizMode==='volume'){
+    customColors=null;
+    const acc={};
+    blocchi.forEach(b=>{
+      const ex=POOL.find(x=>x.id===b.esercizio);if(!ex)return;
+      const km=K_MATRIX[b.stimolo]||K_MATRIX['iper'];
+      const vol=b.serie*b.reps;
+      Object.entries(ex.muscoli).forEach(([m,h])=>Object.entries(km).forEach(([,k])=>{acc[m]=(acc[m]||0)+h*k*vol;}));
+    });
+    if(Object.keys(acc).length){
+      const maxV=Math.max(...Object.values(acc));
+      const bs={};
+      Object.entries(acc).forEach(([m,v])=>{const ratio=v/maxV;const n=Math.min(10,Math.round((Math.log1p(ratio*9)/Math.log1p(9))*10));if(n>=1)bs[m]={intensity:n,selected:false};});
+      chart.update({bodyState:bs});
+    }else chart.update({bodyState:{}});
+    document.getElementById('map-title').textContent='Heatmap volume — '+titles[visione];
+  }else{
+    chart.update({bodyState:{}});
+    const sc={};
+    blocchi.forEach(b=>{
+      const ex=POOL.find(x=>x.id===b.esercizio);if(!ex)return;
+      Object.keys(ex.muscoli).forEach(m=>{if(!sc[m])sc[m]={forza:0,iper:0,pot:0,res:0};sc[m][b.stimolo]=(sc[m][b.stimolo]||0)+1;});
+    });
+    if(Object.keys(sc).length){
+      customColors=new Map();
+      Object.entries(sc).forEach(([m,counts])=>{
+        const dom=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+        const col=dom==='forza'?'#ff3333':dom==='iper'?'#3399ff':dom==='pot'?'#aa44ff':'#33cc66';
+        customColors.set(m,col);
+      });
+      chart.refreshAllPaths();
+    }else{customColors=null;chart.update({bodyState:{}});}
+    document.getElementById('map-title').textContent='Stimolo dominante — '+titles[visione];
+  }
+}
+
+// POOL
+function setTab(tab,btn){poolTab=tab;document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderPool();}
+function getMissing(){
+  if(!scheda.length)return new Set();
+  const acc={};
+  scheda.forEach(sess=>sess.blocchi.forEach(b=>{const ex=POOL.find(x=>x.id===b.esercizio);if(!ex)return;Object.keys(ex.muscoli).forEach(m=>{acc[m]=(acc[m]||0)+ex.muscoli[m];});}));
+  if(!Object.keys(acc).length)return new Set();
+  const maxV=Math.max(...Object.values(acc));
+  return new Set(POOL.flatMap(ex=>Object.keys(ex.muscoli)).filter(m=>!acc[m]||acc[m]/maxV<0.15));
+}
+function getRec(){
+  if(!scheda.length)return new Set(['pull_up','push_up','pistol_squat','plank','dips','hollow_position','scapular_pull_up','australian_pull_up']);
+  const miss=getMissing();
+  const rec=new Set();
+  POOL.forEach(ex=>{if(Object.keys(ex.muscoli).filter(m=>miss.has(m)).length>=2)rec.add(ex.id);});
+  return rec;
+}
+function renderPool(){
+  const grid=document.getElementById('pool-grid');grid.innerHTML='';
+  const miss=getMissing();const rec=getRec();
+  const usedIds=new Set(curSel.map(e=>e.id));
+  let vis=POOL;
+  if(poolTab==='consigliati')vis=POOL.filter(ex=>rec.has(ex.id));
+  if(poolTab==='mancanti')vis=POOL.filter(ex=>Object.keys(ex.muscoli).some(m=>miss.has(m)));
+  const cats=[...new Set(vis.map(ex=>ex.cat))];
+  cats.forEach(cat=>{
+    const exs=vis.filter(ex=>ex.cat===cat);if(!exs.length)return;
+    const sec=document.createElement('div');sec.className='pool-cat';
+    const col=CAT_COLORS[cat]||'#566070';
+    sec.innerHTML=`<div class="pool-cat-hdr" style="color:${col}">${cat}<div class="pool-cat-line"></div></div><div class="pool-chips" id="pc-${cat.replace(/\s/g,'_')}"></div>`;
+    const chips=sec.querySelector('.pool-chips');
+    exs.forEach(ex=>{
+      const isUsed=usedIds.has(ex.id);
+      const usedEntry=curSel.find(e=>e.id===ex.id);
+      const isRec=rec.has(ex.id);const isMiss=Object.keys(ex.muscoli).some(m=>miss.has(m));
+      let cls='ex-chip';
+      if(isUsed)cls+=' used-'+(usedEntry?.stim||'');
+      else if(poolTab==='consigliati'&&isRec)cls+=' rec';
+      else if(poolTab==='mancanti'&&isMiss)cls+=' miss';
+      const chip=document.createElement('button');chip.className=cls;chip.textContent=ex.nome;chip.onclick=()=>toggleEx(ex.id);
+      chips.appendChild(chip);
+    });
+    grid.appendChild(sec);
+  });
+  if(!vis.length)grid.innerHTML='<div style="font-family:var(--FM);font-size:0.63rem;color:var(--muted2);padding:10px">Nessun esercizio.</div>';
+}
+function updateMissingAlert(){
+  const alert=document.getElementById('missing-alert');
+  const miss=getMissing();
+  if(!scheda.length||!miss.size){alert.classList.remove('show');return;}
+  const groups={};
+  POOL.forEach(ex=>Object.keys(ex.muscoli).forEach(m=>{if(miss.has(m)){const nm=m.replace(/-(left|right)/g,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());groups[nm]=true;}}));
+  const list=Object.keys(groups).slice(0,5).join(', ');
+  alert.textContent='⚠️ Muscoli poco allenati: '+list+(Object.keys(groups).length>5?'...':'')+' — vedi tab Mancanti.';
+  alert.classList.add('show');
+}
+
+// SCHEDA VIEW
+function renderSchedaView(){
+  const c=document.getElementById('scheda-view');
+  if(!scheda.length){c.innerHTML='<div style="font-family:var(--FM);font-size:0.63rem;color:var(--muted2);padding:10px">Nessuna sessione.</div>';return;}
+  c.innerHTML=scheda.map((sess,si)=>`
+    <div class="sv-sess">
+      <div class="sv-hdr">
+        <div class="sv-pip" style="background:${CC[sess.stimolo]}"></div>
+        <div class="sv-name">${sess.nome}</div>
+        <div class="sv-meta">${CN[sess.stimolo]} · ${sess.durata}' · ${sess.blocchi.length} es.</div>
+      </div>
+      <div class="sv-body">
+        ${sess.blocchi.map((b,bi)=>{
+          const ex=POOL.find(x=>x.id===b.esercizio);
+          return`<div class="sv-ex">
+            <div class="sv-moves">
+              <button class="sv-mv" onclick="mvEx('${sess.id}',${bi},-1)" ${bi===0?'disabled':''}>▲</button>
+              <button class="sv-mv" onclick="mvEx('${sess.id}',${bi},+1)" ${bi===sess.blocchi.length-1?'disabled':''}>▼</button>
+            </div>
+            <div class="sv-exname" style="color:${CC[b.stimolo]}">${ex?.nome||b.esercizio}</div>
+            <input class="sf" type="number" min="1" max="20" value="${b.serie}" onchange="updB('${sess.id}',${bi},'serie',this.value)"/>
+            <span class="sf-sep">×</span>
+            <input class="sf" type="number" min="1" max="200" value="${b.reps}" onchange="updB('${sess.id}',${bi},'reps',this.value)"/>
+            <span class="sf-sep">@</span>
+            <input class="sf kg" type="number" min="0" max="500" step="0.5" value="${b.peso||''}" placeholder="kg" onchange="updB('${sess.id}',${bi},'peso',this.value)"/>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+}
+function mvEx(sessId,idx,dir){
+  const sess=scheda.find(s=>s.id===sessId);if(!sess)return;
+  const ni=idx+dir;if(ni<0||ni>=sess.blocchi.length)return;
+  [sess.blocchi[idx],sess.blocchi[ni]]=[sess.blocchi[ni],sess.blocchi[idx]];
+  renderSchedaView();
+}
+function updB(sessId,idx,field,val){
+  const sess=scheda.find(s=>s.id===sessId);if(!sess||!sess.blocchi[idx])return;
+  sess.blocchi[idx][field]=field==='peso'?(parseFloat(val)||null):(parseInt(val)||1);
+}
+
+function saveScheda(){
+  const nome=document.getElementById('scheda-name').value||'Scheda senza nome';
+  localStorage.setItem('muscleMapScheda_'+Date.now(),JSON.stringify({nome,sessioni:scheda,createdAt:new Date().toISOString()}));
+  alert('Scheda "'+nome+'" salvata!');
+}
+</script>
+</body>
+</html>
